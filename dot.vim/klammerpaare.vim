@@ -1,0 +1,1 @@
+../grml-etc-core/etc/skel/.vim/klammerpaare.vim

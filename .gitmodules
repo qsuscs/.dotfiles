@@ -1,0 +1,9 @@
+[submodule "grml-etc-core"]
+	path = grml-etc-core
+	url = git://github.com/grml/grml-etc-core.git
+[submodule "vim-pathogen"]
+	path = vim-pathogen
+	url = git://github.com/tpope/vim-pathogen
+[submodule "dot.vim/bundle/vim-characterize"]
+	path = dot.vim/bundle/vim-characterize
+	url = git://github.com/tpope/vim-characterize.git
