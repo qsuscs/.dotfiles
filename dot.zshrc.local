@@ -5,8 +5,7 @@ zstyle :prompt:grml:left:items:percent pre '
 (( $+commands[bsdtar] )) && alias tar=bsdtar || echo "bsdtar not installed"
 alias g=git
 alias hl="highlight -O ansi"
-#export PATH="${PATH}/usr/sbin:/usr/local/sbin:/sbin"
-path=( $HOME/.cabal/bin(/N) $HOME/.local/bin(/N) $path )
+path=( $HOME/.cabal/bin(/N) $HOME/.local/bin(/N) $path /usr/sbin(/N) /usr/local/sbin(/N) /sbin(/N) )
 typeset -xU path
 export SVN_SSH="ssh -i /home/qsuscs/.ssh/id_rsa_subversion"
 ssh-add -l
