@@ -7,7 +7,7 @@ alias g=git
 alias hl="highlight -O ansi"
 #export PATH="${PATH}/usr/sbin:/usr/local/sbin:/sbin"
 path=( $HOME/.cabal/bin(/N) $HOME/.local/bin(/N) $path )
-typeset -U path
+typeset -xU path
 export SVN_SSH="ssh -i /home/qsuscs/.ssh/id_rsa_subversion"
 ssh-add -l
 function countdown {
