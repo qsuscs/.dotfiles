@@ -6,8 +6,7 @@ zstyle :prompt:grml:left:items:percent pre '
 alias g=git
 alias hl="highlight -O ansi"
 #export PATH="${PATH}/usr/sbin:/usr/local/sbin:/sbin"
-path=( $HOME/.cabal/bin(/N) $path )
-path=( $HOME/.local/bin(/N) $path )
+path=( $HOME/.cabal/bin(/N) $HOME/.local/bin(/N) $path )
 typeset -U path
 export SVN_SSH="ssh -i /home/qsuscs/.ssh/id_rsa_subversion"
 ssh-add -l
