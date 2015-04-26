@@ -7,3 +7,6 @@
 [submodule "dot.vim/bundle/vim-characterize"]
 	path = dot.vim/bundle/vim-characterize
 	url = git://github.com/tpope/vim-characterize.git
+[submodule "dot.vim/bundle/vim-go"]
+	path = dot.vim/bundle/vim-go
+	url = git://github.com/fatih/vim-go
