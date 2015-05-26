@@ -1,13 +1,17 @@
 . ~/.zshrc.from_grml
-prompt grml
-zstyle :prompt:grml:left:items:percent pre '
-'
 (( $+commands[bsdtar] )) && alias tar=bsdtar || echo "bsdtar not installed"
 alias g=git
 alias hl="highlight -O ansi"
 path=( $HOME/.cabal/bin(/N) $HOME/.go/bin(/N) $HOME/.local/bin(/N) $path /usr/sbin(/N) /usr/local/sbin(/N) /sbin(/N) )
 typeset -xU path
 export SVN_SSH="ssh -i /home/qsuscs/.ssh/id_rsa_subversion"
+if [[ -e ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
+	prompt off
+	. ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+else
+	zstyle :prompt:grml:left:items:percent pre '
+'
+fi
 ssh-add -l
 function countdown {
 	ENDTIME=$(date -d "$1" +%s) watch -b -e -n 1 -x sh -c 'DIFF=$(($ENDTIME - $(date +%s))); echo $(($DIFF / 60)) min $(($DIFF % 60)) s; if [ $DIFF -lt 1 ]; then exit 1; fi'
