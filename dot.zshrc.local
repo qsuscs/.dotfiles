@@ -1,6 +1,7 @@
 . ~/.zshrc.from_grml
 (( $+commands[bsdtar] )) && alias tar=bsdtar || echo "bsdtar not installed"
 alias g=git
+alias ec="emacsclient -n -a emacs"
 alias hl="highlight -O ansi"
 path=( $HOME/.cabal/bin(/N) $HOME/.go/bin(/N) $HOME/.local/bin(/N) $path /usr/sbin(/N) /usr/local/sbin(/N) /sbin(/N) )
 typeset -xU path
