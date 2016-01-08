@@ -1,0 +1,18 @@
+[ui]
+username = Thomas Schneider <thosch97@gmail.com>
+[extensions]
+rebase =
+purge =
+record =
+hggit =
+progress =
+color =
+pager =
+#mercurial_keyring = ~/.local/lib/python2.7/site-packages/mercurial_keyring.py
+strip =
+[diff]
+git = true
+showfunc = true
+[alias]
+glog = log -G
+describe = log -r . --template '{latesttag}-{latesttagdistance}-{node|short}\n'
