@@ -9,3 +9,4 @@ set exrc
 augroup filetypedetect
 	au BufNewFile, BufRead .tmux.conf*,tmux.conf* setf tmux
 augroup END
+au FileType haskell setlocal expandtab
