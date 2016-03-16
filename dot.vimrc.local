@@ -4,7 +4,6 @@ filetype plugin indent on
 set cursorline
 set number
 set hlsearch
-set list
 set exrc
 augroup filetypedetect
 	au BufNewFile, BufRead .tmux.conf*,tmux.conf* setf tmux
