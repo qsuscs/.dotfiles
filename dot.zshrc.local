@@ -13,6 +13,7 @@ else
 	zstyle :prompt:grml:left:items:percent pre '
 '
 fi
+gpg-connect-agent /bye
 ssh-add -l
 function countdown {
 	ENDTIME=$(date -d "$1" +%s) watch -b -e -n 1 -x sh -c 'DIFF=$(($ENDTIME - $(date +%s))); echo $(($DIFF / 60)) min $(($DIFF % 60)) s; if [ $DIFF -lt 1 ]; then exit 1; fi'
