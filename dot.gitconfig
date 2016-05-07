@@ -1,9 +1,9 @@
 [include]
 	path = ~/.dotfiles/grml-etc-core/etc/skel/.gitconfig
 [user]
-	email = thosch97@gmail.com
+	email = qsuscs@qsuscs.de
 	name = Thomas Schneider
-	signingkey = 57A4FF2F
+	signingkey = 32583db1
 [alias]
 	p = push
 	pl = pull
