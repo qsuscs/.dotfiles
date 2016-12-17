@@ -1,4 +1,4 @@
-# qsuscs’ .dotfiles
+# qsx’ .dotfiles
 Hi there!  These are various config files for programs I use.  You are free to
 do with them whatever the ISC license permits (see LICENSE for details).  I can
 however only speak for my very own stuff, there are some files not written by
