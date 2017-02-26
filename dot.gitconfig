@@ -18,3 +18,5 @@
 	browser = google-chrome
 [pull]
 	ff = only
+[sendemail]
+	bcc = fcc-sent@qsuscs.de
