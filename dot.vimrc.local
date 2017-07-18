@@ -9,3 +9,7 @@ augroup filetypedetect
 	au BufNewFile, BufRead .tmux.conf*,tmux.conf* setf tmux
 augroup END
 au FileType haskell setlocal expandtab
+au FileType ruby set tabstop=2 shiftwidth=2 expandtab textwidth=80
+au FileType yaml set tabstop=2 shiftwidth=2 expandtab textwidth=80
+au BufNewFile,BufRead c[0-9][0-9][0-9][0-9]-fsmpi-[0-9]-config set filetype=cisco
+au BufNewFile,BufRead (startup|running|network)-config set filetype=cisco

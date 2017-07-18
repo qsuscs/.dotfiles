@@ -10,3 +10,6 @@
 [submodule "dot.vim/bundle/vim-go"]
 	path = dot.vim/bundle/vim-go
 	url = git://github.com/fatih/vim-go
+[submodule "dot.vim/bundle/cisco.vim"]
+	path = dot.vim/bundle/cisco.vim
+	url = https://github.com/momota/cisco.vim
