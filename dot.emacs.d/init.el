@@ -34,3 +34,9 @@
 
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-hook 'mail-mode-hook '(lambda() (turn-on-auto-fill)))
+(use-package auctex
+  :ensure t
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq fill-column 80))
