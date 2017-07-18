@@ -13,3 +13,6 @@
 [submodule "dot.vim/bundle/cisco.vim"]
 	path = dot.vim/bundle/cisco.vim
 	url = https://github.com/momota/cisco.vim
+[submodule "dot.emacs.d/elisp/use-package"]
+	path = dot.emacs.d/elisp/use-package
+	url = https://github.com/jwiegley/use-package
