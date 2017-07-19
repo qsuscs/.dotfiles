@@ -51,8 +51,8 @@
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-hook 'mail-mode-hook 'turn-on-auto-fill)
 
-(use-package auctex
-  :ensure t
+(use-package tex
+  :ensure auctex
   :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
