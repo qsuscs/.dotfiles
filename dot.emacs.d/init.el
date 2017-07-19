@@ -58,6 +58,10 @@
   (setq TeX-parse-self t)
   (setq fill-column 80))
 
+(use-package muttrc-mode
+  :ensure t
+  :mode "/muttrc")
+
 (setq tramp-default-method "ssh")
 
 (setq column-number-mode t)
