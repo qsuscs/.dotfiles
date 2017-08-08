@@ -44,9 +44,10 @@
   :mode ("\\.yml\\'" . yaml-mode))
 
 (use-package linum-relative
-  :ensure t)
-(linum-mode)
-(linum-relative-global-mode)
+  :ensure t
+  :config
+  (linum-mode)
+  (linum-relative-global-mode))
 
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-hook 'mail-mode-hook 'turn-on-auto-fill)
