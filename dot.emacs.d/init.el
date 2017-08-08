@@ -63,6 +63,10 @@
   :ensure t
   :mode "/muttrc")
 
+(use-package rust-mode
+  :ensure t
+  :mode "\\.rs\\'")
+
 (setq tramp-default-method "ssh")
 
 (setq column-number-mode t)
