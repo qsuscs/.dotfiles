@@ -18,13 +18,18 @@ room.mention=true
 tray=true
 tray.read=false
 
+typing=false
+message.text=true
+typing.current=false
+
 [ui]
-beep=true
+beep=false
 console.chat=first
-console.muc=first
+console.muc=none
 console.private=first
 intype=true
 roster.status=true
 titlebar.show=true
 tls.show=true
 roster.by=presence
+time.statusbar=off
