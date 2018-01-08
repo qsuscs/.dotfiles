@@ -40,18 +40,19 @@
   :config (color-theme-sanityinc-tomorrow-blue))
 
 (use-package yaml-mode
-  :ensure t
   :mode ("\\.yml\\'" . yaml-mode))
 
 (use-package linum-relative
   :ensure t
   :config
   (linum-mode)
-  (linum-relative-global-mode))
+  (linum-relative-global-mode)
+  (setq linum-relative-current-symbol ""))
 
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-to-list 'auto-mode-alist '("/neomutt" . mail-mode))
 (add-hook 'mail-mode-hook 'turn-on-auto-fill)
+(add-hook 'mail-mode-hook 'mail-text)
 
 (use-package tex
   :ensure auctex
@@ -61,11 +62,9 @@
   (setq fill-column 80))
 
 (use-package muttrc-mode
-  :ensure t
   :mode "/muttrc")
 
 (use-package rust-mode
-  :ensure t
   :mode "\\.rs\\'")
 
 (setq tramp-default-method "ssh")
