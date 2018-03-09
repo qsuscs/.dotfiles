@@ -70,3 +70,5 @@
 (setq tramp-default-method "ssh")
 
 (setq column-number-mode t)
+
+(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
