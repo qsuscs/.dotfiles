@@ -1,5 +1,6 @@
 (package-initialize)
 (require 'package)
+(setq package-archives '())
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives
