@@ -1,10 +1,8 @@
 (package-initialize)
 (require 'package)
-(setq package-archives '())
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives
-	     '("gnu" . "https://elpa.gnu.org/packages/") t)
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+	("gnu" . "https://elpa.gnu.org/packages/")))
 
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
