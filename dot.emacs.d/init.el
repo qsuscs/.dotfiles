@@ -29,7 +29,8 @@
 
 (require 'use-package)
 
-(server-start)
+(load "server")
+(unless (server-running-p) (server-start))
 
 (setq custom-file
       (concat user-emacs-directory
