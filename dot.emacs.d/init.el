@@ -40,7 +40,7 @@
   :config (color-theme-sanityinc-tomorrow-blue))
 
 (use-package yaml-mode
-  :mode ("\\.yml\\'" . yaml-mode))
+  :mode "\\.yml\\'")
 
 (use-package linum-relative
   :ensure t
