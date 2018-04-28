@@ -80,3 +80,72 @@
 (global-set-key (kbd "C-M-y") '(lambda ()
 				 (interactive)
 				 (save-excursion (insert (gui-get-primary-selection)))))
+
+;;; Mail
+(setq message-kill-buffer-on-exit t
+      message-sendmail-envelope-from 'header
+      message-send-mail-function 'message-send-mail-with-sendmail
+      notmuch-mua-user-agent-function 'notmuch-mua-user-agent-full
+      notmuch-always-prompt-for-sender t)
+(use-package gnus-alias
+  :ensure t
+  :config
+  (setq gnus-alias-identity-alist
+	'(("Chaotikum"
+	   nil
+	   "Thomas Schneider <qsx@chaotikum.eu>"
+	   nil
+	   (("Fcc" . "Chaotikum/Sent"))
+	   nil
+	   nil)
+	  ("RWTH"
+	   "Chaotikum"
+	   "Thomas Schneider <thomas.schneider@informatik.rwth-aachen.de>"
+	   "RWTH Aachen"
+	   nil
+	   nil
+	   nil)
+	  ("FSMPI"
+	   nil
+	   "Thomas Schneider <thomas@fsmpi.rwth-aachen.de>"
+	   "Fachschaft I/1 der RWTH Aachen"
+	   (("Fcc" . "FSMPI/Sent"))
+	   nil
+	   "~/.signature-fsmpi")
+	  ("AStA"
+	   nil
+	   "Thomas Schneider <tschneider@asta.rwth-aachen.de>"
+	   "AStA der RWTH Aachen"
+	   (("Fcc" . "AStA/Sent"))
+	   nil
+	   "~/.signature-asta")
+	  ("Automata"
+	   nil
+	   "Thomas Schneider <schneider@automata.rwth-aachen.de>"
+	   "Lehrstuhl für Informatik 7, RWTH Aachen"
+	   (("Fcc" . "\"Automata/Sent Items\""))
+	   nil
+	   "~/.signature-automata")
+	  ("CCCAC"
+	   nil
+	   "qsx <qsx@aachen.ccc.de>"
+	   nil
+	   (("Fcc" . "CCCAC/Sent"))
+	   nil
+	   nil))
+	gnus-alias-default-identity "Chaotikum"
+	gnus-alias-identity-rules
+	'(("FSMPI" ("from" "fsmpi" both) "FSMPI")
+	  ("AStA" ("from" "asta" both) "AStA")
+	  ("Automata" ("from" "automata" both) "Automata")
+	  ("RWTH" ("from" "rwth-aachen" both) "RWTH")
+	  ("CCCAC" ("from" "aachen\.ccc\.de" both) "CCCAC")))
+  (add-hook 'message-setup-hook 'gnus-alias-determine-identity))
+(add-hook 'message-setup-hook
+	  (lambda ()
+	    (make-local-variable 'message-user-fqdn)
+	    (setq message-user-fqdn
+		  (car (reverse (split-string
+				 (car (mail-header-parse-address
+				       (message-field-value "From")))
+				 "@"))))))
