@@ -10,6 +10,7 @@ color =
 pager =
 #mercurial_keyring = ~/.local/lib/python2.7/site-packages/mercurial_keyring.py
 strip =
+mq =
 [diff]
 git = true
 showfunc = true
