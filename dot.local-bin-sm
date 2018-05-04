@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+set -x
+mbsync -a || true
+notmuch new
+new=$(notmuch search --output=messages tag:new | xargs)
+afew -tnvv
+notmuch search --exclude=false $new
