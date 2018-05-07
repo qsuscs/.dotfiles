@@ -72,6 +72,8 @@
 (use-package rust-mode
   :mode "\\.rs\\'")
 
+(load-library "git-commit")
+
 (setq tramp-default-method "ssh")
 
 (setq column-number-mode t)
