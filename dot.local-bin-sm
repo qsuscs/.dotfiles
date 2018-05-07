@@ -4,5 +4,6 @@ set -x
 mbsync -a || true
 notmuch new
 new=$(notmuch search --output=messages tag:new | xargs)
+[ -z "$new" ] && exit
 afew -tnvv
 notmuch search --exclude=false $new
