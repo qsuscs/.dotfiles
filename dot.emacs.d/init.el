@@ -23,6 +23,7 @@
 (let ((default-directory
 	(concat user-emacs-directory
 		(convert-standard-filename "elisp/"))))
+  (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 
 (require 'use-package)
