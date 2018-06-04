@@ -43,12 +43,14 @@
 (use-package yaml-mode
   :mode "\\.yml\\'")
 
-(use-package linum-relative
-  :ensure t
-  :config
-  (linum-mode)
-  (linum-relative-global-mode)
-  (setq linum-relative-current-symbol ""))
+(if (< emacs-major-version 26)
+    (use-package linum-relative
+      :ensure t
+      :config
+      (linum-mode)
+      (linum-relative-global-mode)
+      (setq linum-relative-current-symbol ""))
+  (setq-default display-line-numbers 'relative))
 
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-to-list 'auto-mode-alist '("/neomutt" . mail-mode))
@@ -152,3 +154,4 @@
 				 (car (mail-header-parse-address
 				       (message-field-value "From")))
 				 "@"))))))
+(setq mu4e-maildir "~/.maildir")
