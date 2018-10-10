@@ -96,6 +96,10 @@
 				 (interactive)
 				 (insert (gui-get-primary-selection))))
 
+(add-hook 'org-mode-hook 'turn-on-auto-fill)
+
+(setq-default fill-column 80)
+
 ;;; Mail
 (setq message-kill-buffer-on-exit t
       message-sendmail-envelope-from 'header
