@@ -250,9 +250,9 @@ animation-discharging-2 = 
 animation-discharging-foreground = ${colors.foreground-alt}
 animation-discharging-framerate = 750
 
+label-full = %percentage%% %consumption%W
 label-charging = %percentage%% %consumption%W %time%
 label-discharging = ${self.label-charging}
-label-full = ${self.label-charging}
 
 time-format = %H:%M
 
