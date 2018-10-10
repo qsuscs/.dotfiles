@@ -52,6 +52,14 @@
       (setq linum-relative-current-symbol ""))
   (setq-default display-line-numbers 'relative))
 
+(use-package pdf-tools
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-page)
+  (defun my-dont-show-line-numbers-hook ()
+    (setq display-line-numbers nil))
+  (add-hook 'pdf-view-mode-hook #'my-dont-show-line-numbers-hook))
+
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-to-list 'auto-mode-alist '("/neomutt" . mail-mode))
 (add-hook 'mail-mode-hook 'turn-on-auto-fill)
