@@ -104,8 +104,25 @@
 (setq message-kill-buffer-on-exit t
       message-sendmail-envelope-from 'header
       message-send-mail-function 'message-send-mail-with-sendmail
+      message-elide-ellipsis "[…]"
+					; message-alternative-emails
+      message-confirm-send t
+      mail-user-agent 'gnus-user-agent
+      read-mail-command 'gnus
+      gnus-gcc-mark-as-read t
+      gnus-user-date-format-alist `((,(gnus-seconds-today) . "          T%H:%M:%S")
+				    (,(gnus-seconds-month) . "        %dT%H:%M:%S")
+				    (,(gnus-seconds-year)  . "     %m-%dT%H:%M:%S")
+				    (t                     .   "%Y-%m-%dT%H:%M:%S"))
+
+      gnus-summary-line-format "%U%R %&user-date; %(%[%5k: %-23,23f%]%)%B%s\n"
+      gnus-sum-thread-tree-single-indent "  "
+      gnus-sorted-header-list '("^From:" "^Organization:" "^Sender:" "^To:" "^Newsgroups:" "^.?Cc:" "^Subject:" "^Date:" "^Resent-.*:" "^Reply-To:" "^Followup-To:" "^X-Clacks-Overhead:" "Openpgp:" "^Authentication-Results:" "^Message-ID:")
+      gnus-visible-headers "^From:\\|^Newsgroups:\\|^Subject:\\|^Date:\\|^Followup-To:\\|^Reply-To:\\|^Organization:\\|^Summary:\\|^Keywords:\\|^To:\\|^[BGF]?Cc:\\|^Posted-To:\\|^Mail-Copies-To:\\|^Mail-Followup-To:\\|^Apparently-To:\\|^Gnus-Warning:\\|^Resent-From:\\|^Message-ID:\\|^Authentication-Results:\\|^Sender:\\|^Resent-.*:\\|^X-Clacks-Overhead:\\|^Openpgp:"
       notmuch-mua-user-agent-function 'notmuch-mua-user-agent-full
       notmuch-always-prompt-for-sender t)
+(add-hook 'message-setup-hook (defun message-add-my-headers ()
+  (message-add-header "Openpgp: id=E384009D3B54DCD321BF953295EE94A432583DB1; url=https://pgp.mit.edu/pks/lookup?op=get&search=0x95EE94A432583DB1; preference=signencrypt")))
 (use-package gnus-alias
   :ensure t
   :config
@@ -114,7 +131,8 @@
 	   nil
 	   "Thomas Schneider <qsx@chaotikum.eu>"
 	   nil
-	   (("Fcc" . "Chaotikum/Sent"))
+	   (;("Fcc" . "Chaotikum/Sent")
+	    ("Gcc" . "nnmaildir+mail:Chaotikum.Sent"))
 	   nil
 	   nil)
 	  ("RWTH"
@@ -128,28 +146,32 @@
 	   nil
 	   "Thomas Schneider <thomas@fsmpi.rwth-aachen.de>"
 	   "Fachschaft I/1 der RWTH Aachen"
-	   (("Fcc" . "FSMPI/Sent"))
+	   (;("Fcc" . "FSMPI/Sent")
+	    ("Gcc" . "nnmaildir+mail:FSMPI.Sent"))
 	   nil
 	   "~/.signature-fsmpi")
 	  ("AStA"
 	   nil
 	   "Thomas Schneider <tschneider@asta.rwth-aachen.de>"
 	   "AStA der RWTH Aachen"
-	   (("Fcc" . "AStA/Sent"))
+	   (;("Fcc" . "AStA/Sent")
+	    ("Gcc" . "nnmaildir+mail:AStA.Sent"))
 	   nil
 	   "~/.signature-asta")
 	  ("Automata"
 	   nil
 	   "Thomas Schneider <schneider@automata.rwth-aachen.de>"
 	   "Lehrstuhl für Informatik 7, RWTH Aachen"
-	   (("Fcc" . "\"Automata/Sent Items\""))
+	   (;("Fcc" . "\"Automata/Sent Items\"")
+	    ("Gcc" . "\"nnmaildir+mail:Automata.Sent Items\""))
 	   nil
 	   "~/.signature-automata")
 	  ("CCCAC"
 	   nil
 	   "qsx <qsx@aachen.ccc.de>"
 	   nil
-	   (("Fcc" . "CCCAC/Sent"))
+	   (;("Fcc" . "CCCAC/Sent")
+	    ("Gcc" . "nnmaildir+mail:CCCAC.Sent"))
 	   nil
 	   nil))
 	gnus-alias-default-identity "Chaotikum"
@@ -159,15 +181,23 @@
 	  ("Automata" ("from" "automata" both) "Automata")
 	  ("RWTH" ("from" "rwth-aachen" both) "RWTH")
 	  ("CCCAC" ("from" "aachen\.ccc\.de" both) "CCCAC")))
-  (add-hook 'message-setup-hook 'gnus-alias-determine-identity))
-(add-hook 'message-setup-hook
-	  (lambda ()
-	    (make-local-variable 'message-user-fqdn)
-	    (setq message-user-fqdn
-		  (car (reverse (split-string
-				 (car (mail-header-parse-address
-				       (message-field-value "From")))
-				 "@"))))))
+  (add-hook 'message-setup-hook 'gnus-alias-determine-identity)
+  )
+
+(defun message-setup-hook-set-fqdn ()
+  (make-local-variable 'message-user-fqdn)
+  (setq message-user-fqdn
+	(car (reverse (split-string
+		       (car (mail-header-parse-address
+			     (message-field-value "From")))
+		       "@")))))
+(add-hook 'message-setup-hook 'message-setup-hook-set-fqdn)
+
+(defun gnus-select-identity ()
+  (interactive)
+  (gnus-alias-select-identity)
+  (message-setup-hook-set-fqdn))
+
 (setq mu4e-maildir "~/.maildir"
       mu4e-get-mail-command "mbsync -a"
       mu4e-change-filenames-when-moving t
@@ -280,3 +310,12 @@
 				     "thomas.schneider@cs.rwth-aachen.de"
 				     "qsuscs@qsuscs.de"
 				     "qsx@qsx.re")))
+
+(setq gnus-select-method '(nntp "news.cis.dfn.de"
+				(nntp-open-connection-function nntp-open-ssl-stream)
+				(nntp-port-number 563))
+      gnus-secondary-select-methods '((nnmaildir "mail"
+						 (directory "~/.nnmaildir")
+						 (nnir-search-engine notmuch)))
+      nnir-notmuch-program "/home/qsx/.local/bin/notmuch-gnus"
+      nnir-notmuch-remove-prefix (concat (getenv "HOME") "/.nnmaildir/"))
