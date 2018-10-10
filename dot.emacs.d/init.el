@@ -168,4 +168,115 @@
 				 (car (mail-header-parse-address
 				       (message-field-value "From")))
 				 "@"))))))
-(setq mu4e-maildir "~/.maildir")
+(setq mu4e-maildir "~/.maildir"
+      mu4e-get-mail-command "mbsync -a"
+      mu4e-change-filenames-when-moving t
+      mu4e-view-show-images t
+      mu4e-headers-include-related t
+      mu4e-use-fancy-chars nil ; TODO
+      mu4e-headers-fields '((:human-date . 12)
+			    (:flags . 6)
+			    (:mailing-list . 10)
+			    (:from-or-to . 22)
+			    (:size . 6)
+			    (:maildir . 25)
+			    (:thread-subject))
+      mu4e-view-fields '(:from
+			 :to
+			 :cc
+			 :bcc
+			 :subject
+			 :flags
+			 :date
+			 :maildir
+			 :mailing-list
+			 :message-id
+			 :user-agent
+			 :tags
+			 :attachments
+			 :signature
+			 :decryption)
+      mu4e-view-show-addresses t
+      mu4e-attachment-dir "/tmp"
+      mu4e-compose-context-policy 'ask
+      mu4e-contexts `(,(make-mu4e-context
+			:name "FSMPI"
+			:match-func (lambda (msg)
+				      (when msg
+					(string-prefix-p "/FSMPI" (mu4e-message-field msg :maildir))))
+			:vars '((user-mail-address . "thomas@fsmpi.rwth-aachen.de")
+				(user-full-name . "Thomas Schneider")
+				(message-user-fqdn . "fsmpi.rwth-aachen.de")
+				(message-user-organization . "Fachschaft I/1 der RWTH Aachen")
+				(mu4e-drafts-folder . "/FSMPI/Drafts")
+				(mu4e-trash-folder . "/FSMPI/Trash")
+				(mu4e-sent-folder . "/FSMPI/Sent")))
+		      ,(make-mu4e-context
+			:name "AStA"
+			:match-func (lambda (msg)
+				      (when msg
+					(string-prefix-p "/AStA" (mu4e-message-field msg :maildir))))
+			:vars '((user-mail-address . "tschneider@asta.rwth-aachen.de")
+				(user-full-name . "Thomas Schneider")
+				(message-user-fqdn . "asta.rwth-aachen.de")
+				(message-user-organization . "AStA der RWTH Aachen")
+				(mu4e-drafts-folder . "/AStA/Drafts")
+				(mu4e-trash-folder . "/AStA/Trash")
+				(mu4e-sent-folder . "/AStA/Sent")))
+		      ,(make-mu4e-context
+			:name "i7"
+			:match-func (lambda (msg)
+				      (when msg
+					(string-prefix-p "/Automata" (mu4e-message-field msg :maildir))))
+			:vars '((user-mail-address . "schneider@automata.rwth-aachen.de")
+				(user-full-name . "Thomas Schneider")
+				(message-user-fqdn . "automata.rwth-aachen.de")
+				(message-user-organization . "Lehrstuhl für Informatik 7 der RWTH Aachen")
+				(mu4e-drafts-folder . "/Automata/Drafts")
+				(mu4e-trash-folder . "/Automata/Deleted Items")
+				(mu4e-sent-folder . "/Automata/Sent Items")))
+		      ,(make-mu4e-context
+			:name "RWTH"
+			:match-func (lambda (msg)
+				      (when msg
+					(string-prefix-p "/Chaotikum/INBOX/RWTH" (mu4e-message-field msg :maildir))))
+			:vars '((user-mail-address . "thomas.schneider@informatik.rwth-aachen.de")
+				(user-full-name . "Thomas Schneider")
+				(message-user-fqdn . "informatik.rwth-aachen.de")
+				(message-user-organization . "RWTH Aachen")
+				(mu4e-drafts-folder . "/Chaotikum/Drafts")
+				(mu4e-trash-folder . "/Chaotikum/Trash")
+				(mu4e-sent-folder . "/Chaotikum/Sent")))
+		      ,(make-mu4e-context
+			:name "CCCAC"
+			:match-func (lambda (msg)
+				      (when msg
+					(string-prefix-p "/CCCAC" (mu4e-message-field msg :maildir))))
+			:vars '((user-mail-address . "qsx@aachen.ccc.de")
+				(user-full-name . "qsx")
+				(message-user-fqdn . "aachen.ccc.de")
+				(mu4e-drafts-folder . "/CCCAC/Drafts")
+				(mu4e-trash-folder . "/CCCAC/Trash")
+				(mu4e-sent-folder . "/CCCAC/Sent")))
+		      ,(make-mu4e-context
+			:name "Xaotikum" ; OH COME ON
+			:match-func (lambda (msg)
+				      (when msg
+					(string-prefix-p "/Chaotikum" (mu4e-message-field msg :maildir))))
+			:vars '((user-mail-address . "qsx@chaotikum.eu")
+				(message-user-fqdn . "chaotikum.eu")
+				(user-full-name . "Thomas Schneider")
+				(mu4e-drafts-folder . "/Chaotikum/Drafts")
+				(mu4e-trash-folder . "/Chaotikum/Trash")
+				(mu4e-sent-folder . "/Chaotikum/Sent"))))
+      mu4e-user-mail-address-list (append
+				   (delq nil
+					 (mapcar (lambda (context)
+						   (when (mu4e-context-vars context)
+						     (cdr (assq 'user-mail-address (mu4e-context-vars context)))))
+						 mu4e-contexts))
+				   '("dl5qx@dl5qx.de"
+				     "thomas.schneider4@rwth-aachen.de"
+				     "thomas.schneider@cs.rwth-aachen.de"
+				     "qsuscs@qsuscs.de"
+				     "qsx@qsx.re")))
