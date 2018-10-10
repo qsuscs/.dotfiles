@@ -2,8 +2,9 @@ export TERMINAL=gnome-terminal
 export GDK_SCALE=2
 xrandr --dpi 192
 [ -f ~/.fehbg ] && ~/.fehbg
-xscreensaver -no-splash & && xscreensaver-dunst-watch &
+xscreensaver -no-splash &
+xscreensaver-dunst-watch &
 nm-applet &
 redshift-gtk &
 compton --backend=glx --glx-swap-method=buffer-age -b
-polybar top &
+(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
