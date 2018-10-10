@@ -68,6 +68,8 @@
 (add-hook 'mail-mode-hook 'mail-text)
 
 (use-package tex
+  :init
+  (setq reftex-plug-into-AUCTeX t)
   :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
@@ -76,8 +78,6 @@
 (use-package auctex-latexmk
   :config
   (auctex-latexmk-setup))
-
-(setq reftex-plug-into-AUCTeX t)
 
 (use-package muttrc-mode
   :mode "/muttrc")
