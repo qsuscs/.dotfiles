@@ -60,6 +60,8 @@
     (setq display-line-numbers nil))
   (add-hook 'pdf-view-mode-hook #'my-dont-show-line-numbers-hook))
 
+(setq-default show-trailing-whitespace t)
+
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-to-list 'auto-mode-alist '("/neomutt" . mail-mode))
 (add-hook 'mail-mode-hook 'turn-on-auto-fill)
