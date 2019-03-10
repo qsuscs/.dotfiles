@@ -6,5 +6,6 @@ xscreensaver -no-splash &
 xscreensaver-dunst-watch &
 nm-applet &
 redshift-gtk &
+nextcloud &
 compton --backend=glx --glx-swap-method=buffer-age -b
 (while ! pidof i3; do sleep 1; done; exec polybar -r top) &
