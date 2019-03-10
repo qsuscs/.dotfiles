@@ -76,9 +76,9 @@
   :init
   (setq reftex-plug-into-AUCTeX t)
   :config
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
-  (setq fill-column 80))
+  (setq TeX-auto-save nil
+	TeX-parse-self t
+	fill-column 80))
 
 (use-package auctex-latexmk
   :config
