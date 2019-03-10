@@ -40,6 +40,11 @@
   :ensure t
   :config (color-theme-sanityinc-tomorrow-blue))
 
+(setq display-time-day-and-date t
+      display-time-24hr-format t)
+(display-time-mode)
+(display-battery-mode)
+
 (use-package yaml-mode
   :mode "\\.yml\\'")
 
