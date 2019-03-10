@@ -40,6 +40,7 @@ modules-right = filesystem pulseaudio xkeyboard memory cpu wlan eth backlight-ac
 
 tray-position = right
 tray-padding = 0
+tray-maxsize = 1000
 
 wm-restack = i3
 
@@ -117,7 +118,7 @@ icon-play = 
 icon-pause = 
 icon-next = 
 
-label-song = %title (%artist%)
+label-song = %title% (%artist%)
 label-song-maxlen = 25
 label-song-ellipsis = true
 
