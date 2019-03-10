@@ -11,3 +11,4 @@ xscreensaver-command -watch | while read event rest; do
 			;;
 	esac
 done
+logger Exiting with $?
