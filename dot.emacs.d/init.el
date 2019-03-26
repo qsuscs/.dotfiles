@@ -51,6 +51,9 @@
       :init (exec-path-from-shell-initialize))
     (setenv "LANG" "de_DE.UTF-8"))
 
+(use-package ace-window
+  :bind ("M-o" . ace-window))
+
 (use-package yaml-mode
   :mode "\\.yml\\'")
 
