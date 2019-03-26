@@ -45,6 +45,12 @@
 (display-time-mode)
 (display-battery-mode)
 
+(when (eq system-type 'darwin)
+    (use-package exec-path-from-shell
+      :ensure t
+      :init (exec-path-from-shell-initialize))
+    (setenv "LANG" "de_DE.UTF-8"))
+
 (use-package yaml-mode
   :mode "\\.yml\\'")
 
