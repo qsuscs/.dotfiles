@@ -54,6 +54,9 @@
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
+(use-package flycheck
+  :init (global-flycheck-mode))
+
 (use-package yaml-mode
   :mode "\\.yml\\'")
 
