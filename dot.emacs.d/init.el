@@ -53,6 +53,11 @@
       :init (exec-path-from-shell-initialize))
     (setenv "LANG" "de_DE.UTF-8"))
 
+(use-package projectile
+  :config (projectile-mode 1)
+  :bind (:map projectile-mode-map
+	      ("C-c p" . #'projectile-command-map)))
+
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
