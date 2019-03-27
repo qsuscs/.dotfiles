@@ -66,6 +66,26 @@
 	 ("C-:" . avy-goto-char-2)
 	 ("C-," . avy-goto-line)))
 
+(use-package helm-config
+  :bind ("C-c h" . #'helm-command-prefix))
+(use-package helm
+  :bind (("M-x" . #'helm-M-x)
+	 ("M-y" . #'helm-show-kill-ring)
+	 ("C-x b" . #'helm-mini)
+	 ("C-x C-f" . #'helm-find-files)
+	 ("C-c h o" . #'helm-occur)
+	 ("C-h SPC" . #'helm-all-mark-rings))
+  :config
+  (helm-mode 1)
+  (helm-autoresize-mode t)
+  (setq helm-split-window-inside-p t
+	;; helm-split-window-default-side 'other
+	helm-M-x-fuzzy-match t
+	helm-buffers-fuzzy-matching t
+	helm-recentf-fuzzy-match t
+	helm-ff-file-name-history-use-recentf t
+	helm-echo-input-in-header-line t))
+
 (use-package flycheck
   :init (global-flycheck-mode))
 
