@@ -13,9 +13,6 @@
 [submodule "dot.vim/bundle/cisco.vim"]
 	path = dot.vim/bundle/cisco.vim
 	url = git://github.com/momota/cisco.vim
-[submodule "dot.emacs.d/elisp/use-package"]
-	path = dot.emacs.d/elisp/use-package
-	url = git://github.com/jwiegley/use-package
 [submodule "dot.emacs.d/elisp/git-commit-mode"]
 	path = dot.emacs.d/elisp/git-commit-mode
 	url = git://github.com/rafl/git-commit-mode

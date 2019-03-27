@@ -1,8 +1,12 @@
-(package-initialize)
 (require 'package)
+(setq package-enable-at-startup nil)
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
 	("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
@@ -25,8 +29,6 @@
 		(convert-standard-filename "elisp/"))))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
-
-(require 'use-package)
 
 (load "server")
 (unless (server-running-p) (server-start))
