@@ -61,6 +61,11 @@
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
+(use-package avy
+  :bind (("C-." . avy-goto-char-timer)
+	 ("C-:" . avy-goto-char-2)
+	 ("C-," . avy-goto-line)))
+
 (use-package flycheck
   :init (global-flycheck-mode))
 
