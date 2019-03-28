@@ -1,18 +1,15 @@
+# -*- shell-script -*-
 . ~/.zshrc.from_grml
-(( $+commands[bsdtar] )) && alias tar=bsdtar || echo "bsdtar not installed"
+(( $+commands[bsdtar] )) && alias tar=bsdtar
+(( $+commands[chg] )) && alias hg=chg
 alias g=git
 alias ec="emacsclient -n"
 alias et="emacsclient -t"
 alias hl="highlight -O ansi"
 path=( $HOME/.gem/ruby/*/bin(/N) $HOME/.cabal/bin(/N) $HOME/.go/bin(/N) $HOME/.cargo/bin(/N) $HOME/.local/bin(/N) $path /usr/sbin(/N) /usr/local/sbin(/N) /sbin(/N) )
 typeset -xU path
-if [[ -e ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
-	prompt off
-	. ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-else
-	zstyle :prompt:grml:left:items:percent pre '
+zstyle :prompt:grml:left:items:percent pre '
 '
-fi
 gpg-connect-agent /bye
 ssh-add -l
 function countdown {
