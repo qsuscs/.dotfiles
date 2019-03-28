@@ -1,18 +1,6 @@
 [submodule "grml-etc-core"]
 	path = grml-etc-core
 	url = git://github.com/grml/grml-etc-core.git
-[submodule "vim-pathogen"]
-	path = vim-pathogen
-	url = git://github.com/tpope/vim-pathogen
-[submodule "dot.vim/bundle/vim-characterize"]
-	path = dot.vim/bundle/vim-characterize
-	url = git://github.com/tpope/vim-characterize.git
-[submodule "dot.vim/bundle/vim-go"]
-	path = dot.vim/bundle/vim-go
-	url = git://github.com/fatih/vim-go
-[submodule "dot.vim/bundle/cisco.vim"]
-	path = dot.vim/bundle/cisco.vim
-	url = git://github.com/momota/cisco.vim
 [submodule "dot.emacs.d/elisp/git-commit-mode"]
 	path = dot.emacs.d/elisp/git-commit-mode
 	url = git://github.com/rafl/git-commit-mode
