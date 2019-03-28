@@ -89,6 +89,8 @@
 (use-package flycheck
   :init (global-flycheck-mode))
 
+(use-package apache-mode)
+
 (use-package yaml-mode
   :mode "\\.yml\\'")
 
