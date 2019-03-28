@@ -113,6 +113,8 @@
 
 (setq-default show-trailing-whitespace t)
 
+(setq require-final-newline 'ask)
+
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-to-list 'auto-mode-alist '("/neomutt" . mail-mode))
 (add-hook 'mail-mode-hook 'turn-on-auto-fill)
