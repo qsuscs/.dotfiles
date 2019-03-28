@@ -1,11 +1,14 @@
-export TERMINAL=gnome-terminal
-export GDK_SCALE=2
-xrandr --dpi 192
-[ -f ~/.fehbg ] && ~/.fehbg
-xscreensaver -no-splash &
-xscreensaver-dunst-watch &
-nm-applet &
-redshift-gtk &
-nextcloud &
-compton --backend=glx --glx-swap-method=buffer-age -b
-(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
+if [ -z $XPROFILE_RUN ]; then
+	export XPROFILE_RUN=yes
+	export TERMINAL=gnome-terminal
+	export GDK_SCALE=2
+	xrandr --dpi 192
+	[ -f ~/.fehbg ] && ~/.fehbg
+	xscreensaver -no-splash &
+	xscreensaver-dunst-watch &
+	nm-applet &
+	redshift-gtk &
+	nextcloud &
+	compton --backend=glx --glx-swap-method=buffer-age -b
+	(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
+fi
