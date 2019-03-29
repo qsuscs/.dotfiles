@@ -55,8 +55,7 @@
 
 (use-package projectile
   :config (projectile-mode 1)
-  :bind (:map projectile-mode-map
-	      ("C-c p" . #'projectile-command-map)))
+  :bind-keymap ("C-c p" . projectile-command-map))
 
 (use-package ace-window
   :bind ("M-o" . ace-window))
@@ -67,13 +66,14 @@
 	 ("C-," . avy-goto-line)))
 
 (use-package helm-config
-  :bind ("C-c h" . #'helm-command-prefix))
+  :bind-keymap ("C-c h" . helm-command-prefix)
+  :bind (:map helm-command-map
+	      ("o" . #'helm-occur)))
 (use-package helm
   :bind (("M-x" . #'helm-M-x)
 	 ("M-y" . #'helm-show-kill-ring)
 	 ("C-x b" . #'helm-mini)
 	 ("C-x C-f" . #'helm-find-files)
-	 ("C-c h o" . #'helm-occur)
 	 ("C-h SPC" . #'helm-all-mark-rings))
   :config
   (helm-mode 1)
