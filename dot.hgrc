@@ -1,3 +1,4 @@
+# -*- conf -*-
 [ui]
 username = Thomas Schneider <qsx@qsx.re>
 [extensions]
