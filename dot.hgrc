@@ -1,19 +1,26 @@
 # -*- conf -*-
+%include ~/.hgrc.local
+
 [ui]
 username = Thomas Schneider <qsx@qsx.re>
+
 [extensions]
-rebase =
-purge =
-record =
-hggit =
-progress =
-color =
-pager =
-strip =
+gpg =
+histedit =
 mq =
+pager =
+patchbomb =
+progress =
+purge =
+rebase =
+record =
+strip =
+zeroconf =
+
 [diff]
 git = true
 showfunc = true
+
 [alias]
-glog = log -G
 describe = log -r . --template '{latesttag}-{latesttagdistance}-{node|short}\n'
+glog = log -G
