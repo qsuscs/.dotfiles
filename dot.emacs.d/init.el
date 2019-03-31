@@ -57,6 +57,9 @@
   :config (projectile-mode 1)
   :bind-keymap ("C-c p" . projectile-command-map))
 
+(use-package mercurial
+  :bind-keymap ("C-c H" . hg-global-map))
+
 (use-package magit
   :bind ("C-x g" . #'magit-status)
   :config (setq global-magit-file-mode t))
