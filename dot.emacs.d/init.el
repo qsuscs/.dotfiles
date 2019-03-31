@@ -92,6 +92,11 @@
 	helm-recentf-fuzzy-match t
 	helm-ff-file-name-history-use-recentf t
 	helm-echo-input-in-header-line t))
+(use-package helm-projectile
+  :config
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on)
+  :after (projectile helm))
 
 (use-package flycheck
   :init (global-flycheck-mode))
