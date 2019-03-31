@@ -57,6 +57,10 @@
   :config (projectile-mode 1)
   :bind-keymap ("C-c p" . projectile-command-map))
 
+(use-package magit
+  :bind ("C-x g" . #'magit-status)
+  :config (setq global-magit-file-mode t))
+
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
