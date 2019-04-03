@@ -60,6 +60,21 @@
 	      ([remap completion-at-point] . #'company-complete))
   :config
   (global-company-mode))
+(use-package company-math
+  :config
+  (add-to-list 'company-backends 'company-math-symbols-unicode)
+  (add-hook 'TeX-mode-hook (defun my-TeX-mode-hook-company ()
+			     (setq-local company-backends
+					 (append '((company-math-symbols-latex company-latex-commands))
+						 company-backends)))))
+(use-package company-auctex
+  :config (company-auctex-init))
+(use-package company-jedi
+  :config
+  (add-hook 'python-mode-hook (defun my-python-mode-hook-jedi ()
+				(make-local-variable company-backends)
+				(add-to-list 'company-backends 'company-jedi))))
+
 
 (use-package mercurial
   :bind-keymap ("C-c H" . hg-global-map))
