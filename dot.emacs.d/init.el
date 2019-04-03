@@ -38,9 +38,7 @@
 	      (convert-standard-filename "custom.el")))
 (load custom-file :noerror)
 
-(use-package color-theme-sanityinc-tomorrow
-  :ensure t
-  :config (color-theme-sanityinc-tomorrow-blue))
+(load-theme 'deeper-blue)
 
 (setq display-time-day-and-date t
       display-time-24hr-format t)
