@@ -102,6 +102,10 @@
   (helm-projectile-on)
   :after (projectile helm))
 
+(use-package vdirel
+  :bind (:map message-mode-map
+              ("C-c TAB" . vdirel-helm-select-email)))
+
 (use-package flycheck
   :init (global-flycheck-mode))
 
