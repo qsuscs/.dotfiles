@@ -1,6 +1,3 @@
 [submodule "grml-etc-core"]
 	path = grml-etc-core
 	url = git://github.com/grml/grml-etc-core.git
-[submodule "dot.emacs.d/elisp/git-commit-mode"]
-	path = dot.emacs.d/elisp/git-commit-mode
-	url = git://github.com/rafl/git-commit-mode
