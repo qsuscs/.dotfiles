@@ -55,6 +55,12 @@
   :config (projectile-mode 1)
   :bind-keymap ("C-c p" . projectile-command-map))
 
+(use-package company
+  :bind (:map company-mode-map
+	      ([remap completion-at-point] . #'company-complete))
+  :config
+  (global-company-mode))
+
 (use-package mercurial
   :bind-keymap ("C-c H" . hg-global-map))
 
