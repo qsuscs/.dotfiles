@@ -167,9 +167,6 @@
   :config
   (auctex-latexmk-setup))
 
-(use-package muttrc-mode
-  :mode "/muttrc")
-
 (use-package rust-mode
   :mode "\\.rs\\'")
 
