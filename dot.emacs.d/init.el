@@ -7,6 +7,13 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package t))
+(require 'use-package)
+(cl-pushnew '(:when
+              (lambda (package &rest _)
+                `(locate-library (symbol-name ',package)))
+              t)
+            use-package-defaults
+            :test #'equal)
 
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
