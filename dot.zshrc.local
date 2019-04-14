@@ -21,6 +21,3 @@ function fspass () {
 function passta () {
 	        PASSWORD_STORE_DIR=~/RWTH/AStA/pass pass $@
 }
-function i7pass () {
-	        PASSWORD_STORE_DIR=~/RWTH/i7/pass pass $@
-}
