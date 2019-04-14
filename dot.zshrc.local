@@ -2,12 +2,11 @@
 . ~/.zshrc.from_grml
 (( $+commands[bsdtar] )) && alias tar=bsdtar
 (( $+commands[chg] )) && alias hg=chg
+(( $+commands[nvim] )) && alias vim=nvim
 alias g=git
 alias ec="emacsclient -n"
 alias et="emacsclient -t"
 alias hl="highlight -O ansi"
-path=( $HOME/.gem/ruby/*/bin(/N) $HOME/.cabal/bin(/N) $HOME/.go/bin(/N) $HOME/.cargo/bin(/N) $HOME/.local/bin(/N) $path /usr/sbin(/N) /usr/local/sbin(/N) /sbin(/N) )
-typeset -xU path
 zstyle :prompt:grml:left:items:percent pre '
 '
 gpg-connect-agent /bye
