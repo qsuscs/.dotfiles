@@ -229,6 +229,8 @@
 
 (use-package gnus-alias
   :ensure t
+  :bind (:map message-mode-map
+              ("C-c i" . #'gnus-alias-select-identity))
   :config
   (setq gnus-alias-identity-alist
 	'(("Chaotikum"
