@@ -4,6 +4,9 @@
 [ui]
 username = Thomas Schneider <qsx@qsx.re>
 
+[email]
+method = sendmail
+
 [extensions]
 gpg =
 histedit =
@@ -14,6 +17,7 @@ progress =
 purge =
 rebase =
 record =
+remotenames =
 strip =
 zeroconf =
 
