@@ -96,7 +96,8 @@
   :config (setq global-magit-file-mode t))
 
 (use-package ace-window
-  :bind ("M-o" . ace-window))
+  :bind ("M-o" . ace-window)
+  :config (setq aw-scope 'frame))
 
 (use-package avy
   :bind (("C-." . avy-goto-char-timer)
