@@ -1,4 +1,4 @@
-if [ -z $XPROFILE_RUN ]; then
+if [ "$XPROFILE_RUN" != "yes" ]; then
 	export XPROFILE_RUN=yes
 	export GDK_SCALE=2
 	xrandr --dpi 192
@@ -11,3 +11,4 @@ if [ -z $XPROFILE_RUN ]; then
 	compton --backend=glx --glx-swap-method=buffer-age -b
 	(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
 fi
+export XPROFILE_RUN=yes
