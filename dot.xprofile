@@ -4,8 +4,7 @@ if [ -z $XPROFILE_RUN ]; then
 	export GDK_SCALE=2
 	xrandr --dpi 192
 	[ -f ~/.fehbg ] && ~/.fehbg
-	xscreensaver -no-splash &
-	xscreensaver-dunst-watch &
+	xss-lock -- physlock -p "Locked by: $USER" -s -m &
 	nm-applet &
 	redshift-gtk &
 	nextcloud &
