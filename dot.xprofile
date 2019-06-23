@@ -1,8 +1,8 @@
 if [ -z $XPROFILE_RUN ]; then
 	export XPROFILE_RUN=yes
-	export TERMINAL=gnome-terminal
 	export GDK_SCALE=2
 	xrandr --dpi 192
+	export TERMINAL=qterminal
 	[ -f ~/.fehbg ] && ~/.fehbg
 	xss-lock -- physlock -p "Locked by: $USER" -s -m &
 	nm-applet &
