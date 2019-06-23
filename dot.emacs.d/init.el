@@ -8,12 +8,7 @@
   (package-refresh-contents)
   (package-install 'use-package t))
 (require 'use-package)
-(cl-pushnew '(:when
-              (lambda (package &rest _)
-                `(locate-library (symbol-name ',package)))
-              t)
-            use-package-defaults
-            :test #'equal)
+(setq use-package-always-ensure t)
 
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
@@ -96,6 +91,7 @@
 	      ("M-RET" . #'srefactor-refactor-at-point)))
 
 (use-package mercurial
+  :ensure nil
   :bind-keymap ("C-c H" . hg-global-map))
 
 (use-package magit
@@ -112,6 +108,7 @@
 	 ("C-," . avy-goto-line)))
 
 (use-package helm-config
+  :ensure nil
   :bind-keymap ("C-c h" . helm-command-prefix)
   :bind (:map helm-command-map
 	      ("o" . #'helm-occur)))
@@ -175,7 +172,7 @@
 
 (use-package salt-mode)
 
-(use-package ansible-mode)
+(use-package ansible)
 (use-package poly-ansible)
 
 (use-package dockerfile-mode)
@@ -186,6 +183,7 @@
 (add-hook 'Man-mode-hook #'my-dont-show-line-numbers-hook)
 
 (use-package pdf-tools
+  :unless (eq system-type 'darwin)
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page)
@@ -201,6 +199,7 @@
 (add-hook 'mail-mode-hook 'mail-text)
 
 (use-package tex
+  :ensure auctex
   :init
   (setq reftex-plug-into-AUCTeX t)
   :config
