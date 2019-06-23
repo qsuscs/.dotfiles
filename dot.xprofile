@@ -7,7 +7,6 @@ if [ "$XPROFILE_RUN" != "yes" ]; then
 	xss-lock -- physlock -p "Locked by: $USER" -s -m &
 	nm-applet &
 	redshift-gtk &
-	nextcloud &
 	compton --backend=glx --glx-swap-method=buffer-age -b
 	(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
 fi
