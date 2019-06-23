@@ -82,6 +82,11 @@
 				(make-local-variable company-backends)
 				(add-to-list 'company-backends 'company-jedi))))
 
+(semantic-mode 1)
+(use-package srefactor
+  :bind (:map c-mode-map
+	      ("M-RET" . #'srefactor-refactor-at-point)))
+
 
 (use-package mercurial
   :bind-keymap ("C-c H" . hg-global-map))
