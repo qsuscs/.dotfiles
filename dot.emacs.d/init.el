@@ -76,17 +76,24 @@
 						 company-backends)))))
 (use-package company-auctex
   :config (company-auctex-init))
+(use-package company-bibtex
+  :config (add-to-list 'company-backends 'company-bibtex))
+(use-package company-reftex
+  :config (add-to-list 'company-backends 'company-reftex))
 (use-package company-jedi
   :config
   (add-hook 'python-mode-hook (defun my-python-mode-hook-jedi ()
 				(make-local-variable company-backends)
 				(add-to-list 'company-backends 'company-jedi))))
+(use-package company-ansible
+  :config (add-to-list 'company-backends 'company-ansible))
+(use-package company-shell
+  :config (add-to-list 'company-backends '(company-shell company-shell-env)))
 
 (semantic-mode 1)
 (use-package srefactor
   :bind (:map c-mode-map
 	      ("M-RET" . #'srefactor-refactor-at-point)))
-
 
 (use-package mercurial
   :bind-keymap ("C-c H" . hg-global-map))
@@ -139,6 +146,8 @@
 
 (use-package apache-mode)
 
+(use-package meson-mode)
+
 (use-package yaml-mode
   :mode "\\.yml\\'")
 
@@ -151,12 +160,35 @@
       (setq linum-relative-current-symbol ""))
   (setq-default display-line-numbers 'relative))
 
+(use-package stripe-buffer
+  :config
+  (defun my-stripe-listify-buffer-hook ()
+    (stripe-listify-buffer))
+  (dolist (h '(gnus-group-mode-hook gnus-summary-mode-hook))
+    (add-hook h #'my-stripe-listify-buffer-hook)))
+
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode-enable))
+
+(show-paren-mode 1)
+
+(use-package salt-mode)
+
+(use-package ansible-mode)
+(use-package poly-ansible)
+
+(use-package dockerfile-mode)
+
+(defun my-dont-show-line-numbers-hook ()
+  (setq display-line-numbers nil))
+
+(add-hook 'Man-mode-hook #'my-dont-show-line-numbers-hook)
+
 (use-package pdf-tools
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page)
-  (defun my-dont-show-line-numbers-hook ()
-    (setq display-line-numbers nil))
   (add-hook 'pdf-view-mode-hook #'my-dont-show-line-numbers-hook))
 
 (setq-default show-trailing-whitespace t)
