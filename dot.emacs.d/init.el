@@ -11,7 +11,8 @@
 	   (or (and (eq ensure t) (use-package-as-symbol name))
 	       ensure)))
       (when package
-	(if (memq package
+	(if (and (file-exists-p "/etc/gentoo-release")
+		 (memq package
 		      '(auctex
 			bison-mode
 			company
@@ -19,7 +20,7 @@
 			magit
 			markdown-mode
 			rust-mode
-			yaml-mode))
+			yaml-mode)))
 	    t
 	  (use-package-ensure-elpa name args _state _no-refresh))))))
 (unless (package-installed-p 'use-package)
