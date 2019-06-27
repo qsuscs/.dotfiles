@@ -220,8 +220,8 @@
 
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 (add-to-list 'auto-mode-alist '("/neomutt" . mail-mode))
-(add-hook 'mail-mode-hook 'turn-on-auto-fill)
-(add-hook 'mail-mode-hook 'mail-text)
+(add-hook 'mail-mode-hook #'turn-on-auto-fill)
+(add-hook 'mail-mode-hook #'mail-text)
 
 (use-package tex
   :ensure auctex
@@ -243,12 +243,12 @@
 
 (setq column-number-mode t)
 
-(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
+(global-set-key (kbd "C-x C-k") #'kill-this-buffer)
 (global-set-key (kbd "C-M-y") '(lambda ()
 				 (interactive)
 				 (insert (gui-get-primary-selection))))
 
-(add-hook 'org-mode-hook 'turn-on-auto-fill)
+(add-hook 'org-mode-hook #'turn-on-auto-fill)
 
 (setq-default fill-column 80)
 
@@ -344,4 +344,4 @@
 	  ("Automata" ("from" "automata" both) "Automata")
 	  ("RWTH" ("from" "rwth-aachen" both) "RWTH")
 	  ("CCCAC" ("from" "aachen\.ccc\.de" both) "CCCAC")))
-  (add-hook 'message-setup-hook 'gnus-alias-determine-identity))
+  (add-hook 'message-setup-hook #'gnus-alias-determine-identity))
