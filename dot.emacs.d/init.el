@@ -85,7 +85,7 @@
 (use-package company-math
   :config
   (add-to-list 'company-backends 'company-math-symbols-unicode)
-  (add-hook 'TeX-mode-hook (defun my-TeX-mode-hook-company ()
+  (add-hook 'TeX-mode-hook (defun qsx-TeX-mode-hook-company ()
 			     (setq-local company-backends
 					 (append '((company-math-symbols-latex company-latex-commands))
 						 company-backends)))))
@@ -97,7 +97,7 @@
   :config (add-to-list 'company-backends 'company-reftex))
 (use-package company-jedi
   :config
-  (add-hook 'python-mode-hook (defun my-python-mode-hook-jedi ()
+  (add-hook 'python-mode-hook (defun qsx-python-mode-hook-jedi ()
 				(make-local-variable company-backends)
 				(add-to-list 'company-backends 'company-jedi))))
 (use-package company-ansible
@@ -182,10 +182,12 @@
 
 (use-package stripe-buffer
   :config
-  (defun my-stripe-listify-buffer-hook ()
+  (defun qsx-stripe-listify-buffer-hook ()
     (stripe-listify-buffer))
-  (dolist (h '(gnus-group-mode-hook gnus-summary-mode-hook))
-    (add-hook h #'my-stripe-listify-buffer-hook)))
+  (dolist (h '(gnus-group-mode-hook
+	       gnus-summary-mode-hook
+	       package-menu-mode-hook))
+    (add-hook h #'qsx-stripe-listify-buffer-hook)))
 
 (use-package rainbow-delimiters
   :config
@@ -200,17 +202,17 @@
 
 (use-package dockerfile-mode)
 
-(defun my-dont-show-line-numbers-hook ()
+(defun qsx-dont-show-line-numbers-hook ()
   (setq display-line-numbers nil))
 
-(add-hook 'Man-mode-hook #'my-dont-show-line-numbers-hook)
+(add-hook 'Man-mode-hook #'qsx-dont-show-line-numbers-hook)
 
 (use-package pdf-tools
   :unless (eq system-type 'darwin)
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page)
-  (add-hook 'pdf-view-mode-hook #'my-dont-show-line-numbers-hook))
+  (add-hook 'pdf-view-mode-hook #'qsx-dont-show-line-numbers-hook))
 
 (setq-default show-trailing-whitespace t)
 
@@ -284,7 +286,7 @@
 					      (nnir-search-engine notmuch)))
    nnir-notmuch-program "/home/qsx/.local/bin/notmuch-gnus"
    nnir-notmuch-remove-prefix (concat (getenv "HOME") "/.nnmaildir/"))
-  (add-hook 'message-setup-hook (defun message-add-my-headers ()
+  (add-hook 'message-setup-hook (defun qsx-message-add-my-headers ()
 				  (message-add-header "Openpgp: id=E384009D3B54DCD321BF953295EE94A432583DB1; url=https://pgp.mit.edu/pks/lookup?op=get&search=0x95EE94A432583DB1; preference=signencrypt"))))
 
 (use-package gnus-alias
