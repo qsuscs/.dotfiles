@@ -91,10 +91,13 @@
 					 (append '((company-math-symbols-latex company-latex-commands))
 						 company-backends)))))
 (use-package company-auctex
+  :if (display-graphic-p)
   :config (company-auctex-init))
 (use-package company-bibtex
+  :if (display-graphic-p)
   :config (add-to-list 'company-backends 'company-bibtex))
 (use-package company-reftex
+  :if (display-graphic-p)
   :config (add-to-list 'company-backends 'company-reftex))
 (use-package company-jedi
   :config
@@ -210,6 +213,7 @@
 (add-hook 'Man-mode-hook #'qsx-dont-show-line-numbers-hook)
 
 (use-package pdf-tools
+  :if (display-graphic-p)
   :unless (eq system-type 'darwin)
   :config
   (pdf-tools-install)
@@ -226,6 +230,7 @@
 (add-hook 'mail-mode-hook #'mail-text)
 
 (use-package tex
+  :if (display-graphic-p)
   :ensure auctex
   :init
   (setq reftex-plug-into-AUCTeX t)
@@ -235,6 +240,7 @@
 	fill-column 80))
 
 (use-package auctex-latexmk
+  :if (display-graphic-p)
   :config
   (auctex-latexmk-setup))
 
