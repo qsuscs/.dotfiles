@@ -252,6 +252,8 @@
 
 (setq-default fill-column 80)
 
+(add-hook 'text-mode-hook #'turn-on-auto-fill)
+
 ;;; Mail
 (use-package gnus
   :config
