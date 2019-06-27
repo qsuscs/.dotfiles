@@ -74,7 +74,8 @@
 
 (use-package projectile
   :config (projectile-mode 1)
-  :bind-keymap ("C-c p" . projectile-command-map))
+  :bind-keymap ("C-c p" . projectile-command-map)
+  :defer nil)
 
 (use-package company
   :bind (:map company-mode-map
