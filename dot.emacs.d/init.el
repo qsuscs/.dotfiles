@@ -252,7 +252,8 @@
 (use-package rust-mode
   :mode "\\.rs\\'")
 
-(setq tramp-default-method "ssh")
+(setq tramp-default-method "ssh"
+      tramp-terminal-type "tramp")
 
 (setq column-number-mode t)
 
