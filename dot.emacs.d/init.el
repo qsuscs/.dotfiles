@@ -164,6 +164,8 @@
 (use-package helm-rg
   :after helm)
 
+(use-package form-feed)
+
 (use-package vdirel
   :bind (:map message-mode-map
               ("C-c TAB" . vdirel-helm-select-email)))
