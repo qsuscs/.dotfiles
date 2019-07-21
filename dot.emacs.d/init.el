@@ -263,6 +263,7 @@
 				 (insert (gui-get-primary-selection))))
 
 (add-hook 'org-mode-hook #'turn-on-auto-fill)
+(setq org-list-allow-alphabetical t)
 
 (setq-default fill-column 80)
 
