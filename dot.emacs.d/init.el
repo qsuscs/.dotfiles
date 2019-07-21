@@ -161,6 +161,8 @@
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
   :after (projectile helm))
+(use-package helm-rg
+  :after helm)
 
 (use-package vdirel
   :bind (:map message-mode-map
