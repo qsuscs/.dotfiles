@@ -215,6 +215,7 @@
   (setq display-line-numbers nil))
 
 (add-hook 'Man-mode-hook #'qsx-dont-show-line-numbers-hook)
+(add-hook 'eshell-mode-hook #'qsx-dont-show-line-numbers-hook)
 
 (use-package pdf-tools
   :if (display-graphic-p)
