@@ -242,12 +242,18 @@
   :config
   (setq TeX-auto-save nil
 	TeX-parse-self t
-	fill-column 80))
+	TeX-electric-escape t
+	;; TeX-fold-mode
+	font-latex-fontify-sectioning 'color
+	font-latex-fontify-script 'multi-level
+	fill-column 80)
+  (add-hook 'TeX-mode-hook #'turn-on-auto-fill))
 
 (use-package auctex-latexmk
   :if (display-graphic-p)
   :config
-  (auctex-latexmk-setup))
+  (auctex-latexmk-setup)
+  (setq TeX-command-default "LatexMk"))
 
 (use-package rust-mode
   :mode "\\.rs\\'")
