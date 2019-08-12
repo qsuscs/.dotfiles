@@ -2,7 +2,7 @@
 %include ~/.hgrc.local
 
 [ui]
-username = Thomas Schneider <qsx@qsx.re>
+username = Thomas Schneider <qsx@chaotikum.eu>
 
 [email]
 method = sendmail

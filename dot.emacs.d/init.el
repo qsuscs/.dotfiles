@@ -305,10 +305,10 @@
 			     (nntp-open-connection-function nntp-open-ssl-stream)
 			     (nntp-port-number 563))
    gnus-secondary-select-methods '((nnmaildir "mail"
-					      (directory "~/.nnmaildir")
+					      (directory "~/.maildir")
 					      (nnir-search-engine notmuch)))
-   nnir-notmuch-program "/home/qsx/.local/bin/notmuch-gnus"
-   nnir-notmuch-remove-prefix (concat (getenv "HOME") "/.nnmaildir/"))
+   ;;   nnir-notmuch-program "/home/qsx/.local/bin/notmuch-gnus"
+   nnir-notmuch-remove-prefix (concat (getenv "HOME") "/.maildir/"))
   (add-hook 'message-setup-hook (defun qsx-message-add-my-headers ()
 				  (message-add-header "Openpgp: id=E384009D3B54DCD321BF953295EE94A432583DB1; url=https://pgp.mit.edu/pks/lookup?op=get&search=0x95EE94A432583DB1; preference=signencrypt"))))
 

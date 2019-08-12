@@ -9,9 +9,11 @@ alert = #bd2c40
 
 [bar/top]
 width = 100%
-height = 30
-radius = 6.0
+height = 20
+radius = 3.0
 fixed-center = false
+
+monitor = HDMI-0
 
 dpi = -1
 
@@ -30,13 +32,13 @@ padding-right = 2
 module-margin-left = 0
 module-margin-right = 1
 
-font-0 = "Source Code Pro Medium:size=8;1"
+font-0 = "Source Code Pro Medium:size=11;1"
 font-1 = "Wuncon Siji:size=8;1"
 font-2 = "Noto Emoji:size=8;0"
 
 modules-left = i3
 modules-center = mpd
-modules-right = filesystem pulseaudio xkeyboard memory cpu wlan eth backlight-acpi battery temperature date
+modules-right = pulseaudio xkeyboard memory cpu eth temperature date
 
 tray-position = right
 tray-padding = 0
@@ -100,7 +102,7 @@ label-unfocused-padding = 1
 ; visible = Active workspace on unfocused monitor
 label-visible = %index%
 label-visible-background = ${self.label-focused-background}
-label-visible-underline = ${self.label-focused-underline}
+label-visible-underline = ${colors.secondary}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
@@ -163,7 +165,7 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = enp0s31f6
+interface = enp6s0
 interval = 3.0
 
 format-connected-underline = #55aa55

@@ -8,5 +8,5 @@ new=$(notmuch search --output=messages tag:new | xargs)
 afew -tnvv
 export MAILSEQ="${MBLAZE:-$HOME/.mblaze}/seq.sm"
 export MBLAZE_PAGER=""
-msearch -- --exclude=false $new | mthread | mseq -S | mscan -f '%u%r %3n %10d %17f %8F %t %i%S'
+msearch -- --exclude=false $new | mthread | mseq -S | mscan -f '%u%r %3n %10d %17f %20F %t %i%S'
 type mu 2> /dev/null && mu index || true
