@@ -242,7 +242,6 @@
   :config
   (setq TeX-auto-save nil
 	TeX-parse-self t
-	TeX-electric-escape t
 	;; TeX-fold-mode
 	font-latex-fontify-sectioning 'color
 	font-latex-fontify-script 'multi-level
