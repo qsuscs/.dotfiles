@@ -82,7 +82,9 @@
   :bind (:map company-mode-map
 	      ([remap completion-at-point] . #'company-complete))
   :config
-  (global-company-mode))
+  (global-company-mode)
+  (setq company-tooltip-align-annotations t
+	company-minimum-prefix-length 1))
 (use-package company-math
   :config
   (add-to-list 'company-backends 'company-math-symbols-unicode)
