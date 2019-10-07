@@ -257,6 +257,9 @@
 
 (use-package rust-mode
   :mode "\\.rs\\'")
+;; Add keybindings for interacting with Cargo
+(use-package cargo
+  :hook (rust-mode . cargo-minor-mode))
 
 (setq tramp-default-method "ssh"
       tramp-terminal-type "tramp")
