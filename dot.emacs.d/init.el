@@ -110,11 +110,18 @@
   :config (add-to-list 'company-backends 'company-ansible))
 (use-package company-shell
   :config (add-to-list 'company-backends '(company-shell company-shell-env)))
+(use-package company-lsp)
 
 (semantic-mode 1)
 (use-package srefactor
   :bind (:map c-mode-map
 	      ("M-RET" . #'srefactor-refactor-at-point)))
+
+(use-package lsp-mode
+  :commands lsp
+  :config (require 'lsp-clients))
+
+(use-package lsp-ui)
 
 (use-package mercurial
   :ensure nil
@@ -256,6 +263,7 @@
 (use-package toml-mode)
 
 (use-package rust-mode
+  :hook (rust-mode . lsp)
   :mode "\\.rs\\'")
 ;; Add keybindings for interacting with Cargo
 (use-package cargo
