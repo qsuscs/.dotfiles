@@ -5,30 +5,11 @@
 	("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
-(defun qsx-use-package-ensure (name args _state &optional _no-refresh)
-  (dolist (ensure args)
-    (let ((package
-	   (or (and (eq ensure t) (use-package-as-symbol name))
-	       ensure)))
-      (when package
-	(if (and (file-exists-p "/etc/gentoo-release")
-		 (memq package
-		      '(auctex
-			bison-mode
-			company
-			crontab-mode
-			magit
-			markdown-mode
-			rust-mode
-			yaml-mode)))
-	    t
-	  (use-package-ensure-elpa name args _state _no-refresh))))))
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package t))
 (require 'use-package)
-(setq use-package-ensure-function #'qsx-use-package-ensure
-      use-package-always-ensure t)
+(setq use-package-always-ensure t)
 
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
