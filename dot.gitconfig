@@ -1,7 +1,7 @@
 [include]
 	path = ~/.dotfiles/grml-etc-core/etc/skel/.gitconfig
 [user]
-	email = qsx@qsx.re
+	email = qsx@chaotikum.eu
 	name = Thomas Schneider
 	signingkey = 95ee94a432583db1
 [alias]

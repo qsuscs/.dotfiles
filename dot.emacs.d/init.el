@@ -5,30 +5,11 @@
 	("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
-(defun qsx-use-package-ensure (name args _state &optional _no-refresh)
-  (dolist (ensure args)
-    (let ((package
-	   (or (and (eq ensure t) (use-package-as-symbol name))
-	       ensure)))
-      (when package
-	(if (and (file-exists-p "/etc/gentoo-release")
-		 (memq package
-		      '(auctex
-			bison-mode
-			company
-			crontab-mode
-			magit
-			markdown-mode
-			rust-mode
-			yaml-mode)))
-	    t
-	  (use-package-ensure-elpa name args _state _no-refresh))))))
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package t))
 (require 'use-package)
-(setq use-package-ensure-function #'qsx-use-package-ensure
-      use-package-always-ensure t)
+(setq use-package-always-ensure t)
 
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
@@ -82,7 +63,9 @@
   :bind (:map company-mode-map
 	      ([remap completion-at-point] . #'company-complete))
   :config
-  (global-company-mode))
+  (global-company-mode)
+  (setq company-tooltip-align-annotations t
+	company-minimum-prefix-length 1))
 (use-package company-math
   :config
   (add-to-list 'company-backends 'company-math-symbols-unicode)
@@ -108,11 +91,18 @@
   :config (add-to-list 'company-backends 'company-ansible))
 (use-package company-shell
   :config (add-to-list 'company-backends '(company-shell company-shell-env)))
+(use-package company-lsp)
 
 (semantic-mode 1)
 (use-package srefactor
   :bind (:map c-mode-map
 	      ("M-RET" . #'srefactor-refactor-at-point)))
+
+(use-package lsp-mode
+  :commands lsp
+  :config (require 'lsp-clients))
+
+(use-package lsp-ui)
 
 (use-package mercurial
   :ensure nil
@@ -169,9 +159,6 @@
 (use-package vdirel
   :bind (:map message-mode-map
               ("C-c TAB" . vdirel-helm-select-email)))
-
-(use-package flycheck
-  :init (global-flycheck-mode))
 
 (use-package apache-mode)
 
@@ -242,7 +229,6 @@
   :config
   (setq TeX-auto-save nil
 	TeX-parse-self t
-	TeX-electric-escape t
 	;; TeX-fold-mode
 	font-latex-fontify-sectioning 'color
 	font-latex-fontify-script 'multi-level
@@ -255,8 +241,14 @@
   (auctex-latexmk-setup)
   (setq TeX-command-default "LatexMk"))
 
+(use-package toml-mode)
+
 (use-package rust-mode
+  :hook (rust-mode . lsp)
   :mode "\\.rs\\'")
+;; Add keybindings for interacting with Cargo
+(use-package cargo
+  :hook (rust-mode . cargo-minor-mode))
 
 (setq tramp-default-method "ssh"
       tramp-terminal-type "tramp")
@@ -295,7 +287,7 @@
    gnus-summary-line-format "%U%R %&user-date; %(%[%5k: %-23,23f%]%)%B%s\n"
    gnus-sum-thread-tree-single-indent "  "
    gnus-sorted-header-list '("^From:" "^Organization:" "^Sender:" "^To:" "^Newsgroups:" "^.?Cc:" "^Subject:" "^Date:" "^Resent-.*:" "^Reply-To:" "^Followup-To:" "^X-Clacks-Overhead:" "Openpgp:" "^Authentication-Results:" "^Message-ID:")
-   gnus-visible-headers "^From:\\|^Newsgroups:\\|^Subject:\\|^Date:\\|^Followup-To:\\|^Reply-To:\\|^Organization:\\|^Summary:\\|^Keywords:\\|^To:\\|^[BGF]?Cc:\\|^Posted-To:\\|^Mail-Copies-To:\\|^Mail-Followup-To:\\|^Apparently-To:\\|^Gnus-Warning:\\|^Resent-From:\\|^Message-ID:\\|^Authentication-Results:\\|^Sender:\\|^Resent-.*:\\|^X-Clacks-Overhead:\\|^Openpgp:\\|^User-Agent:\\|X-Mailer:\\|^List-Id:"
+   gnus-visible-headers "^From:\\|^Newsgroups:\\|^Subject:\\|^Date:\\|^Followup-To:\\|^Reply-To:\\|^Organization:\\|^Summary:\\|^Keywords:\\|^To:\\|^[BGF]?Cc:\\|^Posted-To:\\|^Mail-Copies-To:\\|^Mail-Followup-To:\\|^Apparently-To:\\|^Gnus-Warning:\\|^Resent-From:\\|^Message-ID:\\|^Authentication-Results:\\|^Sender:\\|^Resent-.*:\\|^X-Clacks-Overhead:\\|^Openpgp:\\|^User-Agent:\\|X-Mailer:\\|^List-Id:\\|^X-Spam-Score:"
    mm-verify-option 'known
    mml-secure-smime-encrypt-to-self t
    mml-secure-smime-sign-with-sender t
