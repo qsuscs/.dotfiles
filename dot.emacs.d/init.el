@@ -170,9 +170,6 @@
   :bind (:map message-mode-map
               ("C-c TAB" . vdirel-helm-select-email)))
 
-(use-package flycheck
-  :init (global-flycheck-mode))
-
 (use-package apache-mode)
 
 (use-package meson-mode)
