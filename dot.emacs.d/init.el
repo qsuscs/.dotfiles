@@ -201,8 +201,10 @@
 (defun qsx-dont-show-line-numbers-hook ()
   (setq display-line-numbers nil))
 
-(add-hook 'Man-mode-hook #'qsx-dont-show-line-numbers-hook)
-(add-hook 'eshell-mode-hook #'qsx-dont-show-line-numbers-hook)
+(dolist (h '('Man-mode-hook
+	     'eshell-mode-hook
+	     'ledger-report-mode-hook))
+  (add-hook h #'qsx-dont-show-line-numbers-hook))
 
 (use-package pdf-tools
   :if (and
