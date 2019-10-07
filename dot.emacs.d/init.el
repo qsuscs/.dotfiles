@@ -253,6 +253,8 @@
   (auctex-latexmk-setup)
   (setq TeX-command-default "LatexMk"))
 
+(use-package toml-mode)
+
 (use-package rust-mode
   :mode "\\.rs\\'")
 
