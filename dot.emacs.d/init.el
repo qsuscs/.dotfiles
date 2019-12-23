@@ -260,6 +260,8 @@
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
 
+(setq c-default-style "linux")
+
 (setq tramp-default-method "ssh"
       tramp-terminal-type "tramp")
 
