@@ -82,11 +82,6 @@
 (use-package company-reftex
   :if (display-graphic-p)
   :config (add-to-list 'company-backends 'company-reftex))
-(use-package company-jedi
-  :config
-  (add-hook 'python-mode-hook (defun qsx-python-mode-hook-jedi ()
-				(make-local-variable company-backends)
-				(add-to-list 'company-backends 'company-jedi))))
 (use-package company-ansible
   :config (add-to-list 'company-backends 'company-ansible))
 (use-package company-shell
@@ -97,6 +92,12 @@
 (use-package srefactor
   :bind (:map c-mode-map
 	      ("M-RET" . #'srefactor-refactor-at-point)))
+
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
 
 (use-package lsp-mode
   :commands lsp
