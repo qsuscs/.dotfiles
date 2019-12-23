@@ -205,8 +205,9 @@
 (add-hook 'eshell-mode-hook #'qsx-dont-show-line-numbers-hook)
 
 (use-package pdf-tools
-  :if (display-graphic-p)
-  :unless (eq system-type 'darwin)
+  :if (and
+       (display-graphic-p)
+       (not (eq system-type 'darwin)))
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page)
