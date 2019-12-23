@@ -205,9 +205,9 @@
 (defun qsx-dont-show-line-numbers-hook ()
   (setq display-line-numbers nil))
 
-(dolist (h '('Man-mode-hook
-	     'eshell-mode-hook
-	     'ledger-report-mode-hook))
+(dolist (h '(Man-mode-hook
+	     eshell-mode-hook
+	     ledger-report-mode-hook))
   (add-hook h #'qsx-dont-show-line-numbers-hook))
 
 (use-package pdf-tools
