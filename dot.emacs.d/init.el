@@ -248,6 +248,9 @@
   (auctex-latexmk-setup)
   (setq TeX-command-default "LatexMk"))
 
+(use-package go-mode
+  :hook (go-mode . lsp))
+
 (use-package toml-mode)
 
 (use-package rust-mode
