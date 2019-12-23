@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-export GOPATH=~/.go/
+export GOPATH=~/src/go/
 export LESS="FRX"
 export PATH=${PATH/::/:}
 export GPG_TTY=$(tty)
