@@ -165,9 +165,6 @@
 
 (use-package meson-mode)
 
-(use-package yaml-mode
-  :mode "\\.yml\\'")
-
 (if (< emacs-major-version 26)
     (use-package linum-relative
       :ensure t
@@ -196,6 +193,12 @@
 
 (use-package ansible)
 (use-package poly-ansible)
+
+(use-package yaml-mode
+  :config
+  (add-hook 'yaml-mode-hook
+	    (defun qsx-hl-indent-mode-hook ()
+	      (highlight-indentation-mode))))
 
 (use-package dockerfile-mode)
 
