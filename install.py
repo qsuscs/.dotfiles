@@ -2,24 +2,29 @@
 
 import os
 import sys
-from glob import glob
+from pathlib import Path
 
-os.chdir(os.path.dirname(__file__))
+here = Path(__file__).parent.resolve()
+home = Path.home().resolve()
+
 exit = 0
 
-for f in glob('dot.*'):
-    dst = os.path.expanduser(
-        '~/' + f[3:].replace("--", "\ufffd").replace("-", "/").replace("\ufffd", "-"))
-    src = os.path.join(os.getcwd(), f)
-    src_rel = os.path.relpath(src, os.path.dirname(dst))
+for f in here.glob("dot.*"):
+    dst = home / Path(
+        f.name[3:].replace("--", "\ufffd").replace("-", "/").replace("\ufffd", "-")
+    )
+    try:
+        src = f.relative_to(dst.parent)
+    except ValueError:
+        src = os.path.relpath(str(f), str(dst.parent))
 
-    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    dst.parent.mkdir(parents=True, exist_ok=True)
 
     try:
-        os.symlink(src_rel, dst)
+        dst.symlink_to(src)
     except FileExistsError:
-        if not os.path.samefile(src, dst):
-            print(dst + " exists and does not link do " + src)
+        if not (dst.parent / src).samefile(dst):
+            print("{} exists and does not link to {}".format(dst, src))
             exit = 1
 
 sys.exit(exit)
