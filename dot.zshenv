@@ -6,6 +6,7 @@ export GPG_TTY=$(tty)
 export EDITOR=emacsclient
 export VISUAL=$EDITOR
 path=(
+    ~/Library/Python/*/bin(/N)
     ~/.gem/ruby/*/bin(/N)
     ~/.cabal/bin(/N)
     $GOPATH/bin(/N)
