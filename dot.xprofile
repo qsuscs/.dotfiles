@@ -2,9 +2,9 @@ if [ "$XPROFILE_RUN" != "yes" ]; then
 	export XPROFILE_RUN=yes
 	#export GDK_SCALE=2
 	#xrandr --dpi 192
-	export TERMINAL=qterminal
+	export TERMINAL=kitty-1
 	[ -f ~/.fehbg ] && ~/.fehbg
-	xss-lock -- i3lock -c 555555 -f
+	xss-lock -- i3lock -c 555555 -f &
 	owncloud &
 	#nm-applet &
 	(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
