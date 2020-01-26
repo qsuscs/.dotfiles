@@ -82,11 +82,6 @@
 (use-package company-reftex
   :if (display-graphic-p)
   :config (add-to-list 'company-backends 'company-reftex))
-(use-package company-jedi
-  :config
-  (add-hook 'python-mode-hook (defun qsx-python-mode-hook-jedi ()
-				(make-local-variable company-backends)
-				(add-to-list 'company-backends 'company-jedi))))
 (use-package company-ansible
   :config (add-to-list 'company-backends 'company-ansible))
 (use-package company-shell
@@ -97,6 +92,12 @@
 (use-package srefactor
   :bind (:map c-mode-map
 	      ("M-RET" . #'srefactor-refactor-at-point)))
+
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
 
 (use-package lsp-mode
   :commands lsp
@@ -164,9 +165,6 @@
 
 (use-package meson-mode)
 
-(use-package yaml-mode
-  :mode "\\.yml\\'")
-
 (if (< emacs-major-version 26)
     (use-package linum-relative
       :ensure t
@@ -196,17 +194,26 @@
 (use-package ansible)
 (use-package poly-ansible)
 
+(use-package yaml-mode
+  :config
+  (add-hook 'yaml-mode-hook
+	    (defun qsx-hl-indent-mode-hook ()
+	      (highlight-indentation-mode))))
+
 (use-package dockerfile-mode)
 
 (defun qsx-dont-show-line-numbers-hook ()
   (setq display-line-numbers nil))
 
-(add-hook 'Man-mode-hook #'qsx-dont-show-line-numbers-hook)
-(add-hook 'eshell-mode-hook #'qsx-dont-show-line-numbers-hook)
+(dolist (h '(Man-mode-hook
+	     eshell-mode-hook
+	     ledger-report-mode-hook))
+  (add-hook h #'qsx-dont-show-line-numbers-hook))
 
 (use-package pdf-tools
-  :if (display-graphic-p)
-  :unless (eq system-type 'darwin)
+  :if (and
+       (display-graphic-p)
+       (not (eq system-type 'darwin)))
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page)
@@ -241,6 +248,9 @@
   (auctex-latexmk-setup)
   (setq TeX-command-default "LatexMk"))
 
+(use-package go-mode
+  :hook (go-mode . lsp))
+
 (use-package toml-mode)
 
 (use-package rust-mode
@@ -249,6 +259,8 @@
 ;; Add keybindings for interacting with Cargo
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
+
+(setq c-default-style "linux")
 
 (setq tramp-default-method "ssh"
       tramp-terminal-type "tramp")

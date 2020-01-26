@@ -10,3 +10,6 @@
 /transient
 /srecode-map.el
 /semanticdb/
+/.lsp-session-v1
+/abbrev_defs
+/elpy
