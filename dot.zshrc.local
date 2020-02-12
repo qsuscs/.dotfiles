@@ -1,4 +1,5 @@
 # -*- shell-script -*-
+zstyle :prompt:grml:right:setup use-rprompt false
 . ~/.zshrc.from_grml
 (( $+commands[bsdtar] )) && alias tar=bsdtar
 (( $+commands[chg] )) && alias hg=chg
@@ -7,8 +8,12 @@ alias g=git
 alias ec="emacsclient -n"
 alias et="emacsclient -t"
 alias hl="highlight -O ansi"
-zstyle :prompt:grml:left:items:percent pre '
-'
+if (( $+commands[exa] )); then
+    alias ls="exa"
+    alias l="exa -l --git"
+    alias la="exa -la --git"
+fi
+zstyle :prompt:grml:left:items:percent pre $'\n'
 gpg-connect-agent /bye
 ssh-add -l
 function countdown {
