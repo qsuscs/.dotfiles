@@ -1,13 +1,16 @@
+# -*- conf -*-
 [colors]
 background = #222
 background-alt = #444
 foreground = #dfdfdf
-foreground-alt = #555
+#foreground-alt = #555
+foreground-alt = #00ff00
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
 [bar/top]
+monitor = eDP-1
 width = 100%
 height = 30
 radius = 6.0
@@ -25,7 +28,7 @@ border-size = 4
 border-color = #00000000
 
 padding-left = 0
-padding-right = 2
+padding-right = 1
 
 module-margin-left = 0
 module-margin-right = 1
@@ -36,7 +39,7 @@ font-2 = "Noto Emoji:size=8;0"
 
 modules-left = i3
 modules-center = mpd
-modules-right = filesystem pulseaudio xkeyboard memory cpu wlan eth backlight-acpi battery temperature date
+modules-right = pulseaudio xkeyboard memory cpu wlan eth backlight-acpi battery temperature date
 
 tray-position = right
 tray-padding = 0
@@ -177,11 +180,11 @@ format-disconnected =
 type = internal/date
 interval = 1
 
-date =
-date-alt = " %Y-%m-%d"
+date-alt =
+date = " %Y-%m-%d"
 
-time = %H:%M
-time-alt = %H:%M:%S
+time-alt = %H:%M
+time = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
