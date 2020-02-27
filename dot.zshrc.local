@@ -13,6 +13,9 @@ if (( $+commands[exa] )); then
     alias l="exa -l --git"
     alias la="exa -la --git"
 fi
+if (( $+commands[rsync] )); then
+    alias rs="rsync -vahPi"
+fi
 zstyle :prompt:grml:left:items:percent pre $'\n'
 gpg-connect-agent /bye
 ssh-add -l
