@@ -54,11 +54,6 @@
       :init (exec-path-from-shell-initialize))
     (setenv "LANG" "de_DE.UTF-8"))
 
-(use-package projectile
-  :config (projectile-mode 1)
-  :bind-keymap ("C-c p" . projectile-command-map)
-  :defer nil)
-
 (use-package company
   :bind (:map company-mode-map
 	      ([remap completion-at-point] . #'company-complete))
@@ -147,11 +142,6 @@
 	helm-recentf-fuzzy-match t
 	helm-ff-file-name-history-use-recentf t
 	helm-echo-input-in-header-line t))
-(use-package helm-projectile
-  :config
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on)
-  :after (projectile helm))
 (use-package helm-rg
   :after helm)
 
