@@ -9,8 +9,8 @@ alias et="emacsclient -t"
 alias hl="highlight -O ansi"
 if (( $+commands[exa] )); then
     alias ls="exa"
-    alias l="exa -l --git"
-    alias la="exa -la --git"
+    alias l="exa -g -l --git"
+    alias la="exa -g -la --git"
 fi
 if (( $+commands[rsync] )); then
     alias rs="rsync -vahPi"
