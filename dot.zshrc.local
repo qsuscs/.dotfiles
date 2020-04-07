@@ -2,7 +2,6 @@
 zstyle :prompt:grml:right:setup use-rprompt false
 . ~/.zshrc.from_grml
 (( $+commands[bsdtar] )) && alias tar=bsdtar
-(( $+commands[chg] )) && alias hg=chg
 (( $+commands[nvim] )) && alias vim=nvim
 alias g=git
 alias ec="emacsclient -n"
