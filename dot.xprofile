@@ -1,13 +1,12 @@
+# -*- shell-script -*-
 if [ "$XPROFILE_RUN" != "yes" ]; then
 	export XPROFILE_RUN=yes
+	export TERMINAL=kitty-1
 	export GDK_SCALE=2
 	xrandr --dpi 192
-	export TERMINAL=qterminal
 	[ -f ~/.fehbg ] && ~/.fehbg
-	xss-lock -- physlock -p "Locked by: $USER" -s -m &
-	nm-applet &
-	redshift-gtk &
-	compton --backend=glx --glx-swap-method=buffer-age -b
+	xss-lock -- ~/.local/bin/i3lock-wrapper &
+	type nm-applet >/dev/null && nm-applet &
 	(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
 fi
 export XPROFILE_RUN=yes
