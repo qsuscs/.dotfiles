@@ -3,10 +3,13 @@ set -e
 set -x
 mbsync -a || true
 notmuch new
+[ -d ~/.maildir/GMail ] && (cd ~/.maildir/GMail && gmi sync)
 new=$(notmuch search --output=messages tag:new | xargs)
 [ -z "$new" ] && exit
-afew -tnvv
+notmuch config set query.new "$new"
+notmuch tag -new -- tag:new and folder:GMail/mail
+nm-tagger
 export MAILSEQ="${MBLAZE:-$HOME/.mblaze}/seq.sm"
 export MBLAZE_PAGER=""
-msearch -- --exclude=false $new | mthread | mseq -S | mscan -f '%u%r %3n %10d %17f %8F %t %i%S'
-type mu 2> /dev/null && mu index || true
+msearch -- --exclude=false query:new | mthread | mseq -S | mscan -f '%u%r %3n %10d %17f %8F %t %i%S'
+type mu > /dev/null && mu index || true
