@@ -1,0 +1,140 @@
+#!/usr/bin/env python3.7
+"""Tagging script based on mail folder names for Notmuch
+
+This scripts iterates through all messages with ``tag:new``, and replaces that
+by tags based on the name of the maildir folder(s) the message is in.  By
+default, it takes the first and last component to form the name.  This suits my
+personal pre-Notmuch mail setup, with hierarchical IMAP folders, where the tuple
+(account, last_folder) is unique for almost all folders.
+
+My maildirs have the account name as first component and the IMAP part as the
+rest.  So, for example, ``.maildir/Chaotikum/INBOX/Notmuch`` gets the tags
+``Chaotikum`` and ``Notmuch``.
+
+Additionally, folder names can be mapped to other tag names.  This can come in
+handy when you need to use Exchange and its default names, yet want to keep all
+sent messages—whether they are in ``.maildir/Acc/Sent`` or in
+``.maildir/Exchange/Sent Messages``—under ``tag:sent``.
+
+See :py:func:`read_config` for configuration details.
+
+"""
+
+import json
+import logging as log
+from pathlib import Path
+import notmuch
+
+DEFAULT_CONFIG = {
+    "folder_separator": ".",
+    "keep": [],
+    "transforms": {
+        "Drafts": "draft",
+        "INBOX": "inbox",
+        "Junk": "spam",
+        "Sent": "sent",
+    },
+}
+"""Default config, overridden with the user-provided one"""
+
+
+def read_config():
+    """Returns the user’s config, with ``DEFAULT_CONFIG`` as base.
+
+    The config is read from ``$XDG_CONFIG_HOME/nm-tagger/config.json`` and shall
+    contain three keys:
+
+    ``folder_separator``
+        The character that separates logical folder names, or
+        the special value ``#FILESYSTEM#``.
+
+        For example, ``.`` means that the Maildir directories are named like
+        ``.maildir/This.INBOX.is.deeply.nested``.
+
+        The value ``#FILESYSTEM#`` means to use the file system directories (on
+        most systems, this has the same effect as ``/``).
+
+    ``keep``
+        A list of folder names that are assigned as tags, even if they are
+        neither at the begin nor end.
+
+    ``transforms``
+        A dictionary mapping folder names to tags.
+
+    """
+    try:
+        from xdg import BaseDirectory
+
+        config_path_base = Path(BaseDirectory.load_first_config("nm-tagger"))
+    except ImportError:
+        from os import environ
+
+        config_path_base = environ["XDG_CONFIG_HOME"]
+        if config_path_base != "":
+            config_path_base = Path(config_path_base)
+        else:
+            config_path_base = Path.home() / ".config" / "nm-tagger"
+    except KeyError:
+        config_path_base = Path.home() / ".config" / "nm-tagger"
+
+    config_path = config_path_base / "config.json"
+
+    try:
+        with open(config_path) as fp:
+            config = json.load(fp)
+        log.info("Loaded config from %s", config_path)
+        log.debug("Config: %s", config)
+    except FileNotFoundError:
+        log.warn("Config file %s not found!", config_path)
+        config = {}
+    return {**DEFAULT_CONFIG, **config}
+
+
+def main():
+    """Entry point"""
+    log.basicConfig(format="%(asctime)s %(levelname)s: %(message)s", level=log.DEBUG)
+
+    config = read_config()
+
+    with notmuch.Database(mode=notmuch.Database.MODE.READ_WRITE) as db:
+        top = Path(db.get_path())
+        log.info("Opened notmuch db at %s", top)
+        new_messages_query = notmuch.Query(db, "tag:new")
+        log.info("Found %d messages to process", new_messages_query.count_messages())
+        new_messages = set(new_messages_query.search_messages())
+
+        db.begin_atomic()
+
+        for m in new_messages:
+            mid = m.get_message_id()
+            _paths = {Path(p).relative_to(top) for p in m.get_filenames()}
+            if config["folder_separator"] == "#FILESYSTEM#":
+                paths = {p.parts[:-2] for p in _paths}
+            else:
+                paths = {
+                    p.parent.parent.as_posix().split(config["folder_separator"])
+                    for p in _paths
+                }
+            log.debug("paths of %s: (%d) %s", mid, len(paths), str(paths))
+            tags = set()
+            for _p in paths:
+                p = tuple(map(lambda c: config["transforms"].get(c, c), _p))
+                tags.add(p[0])
+                tags.add(p[-1])
+                for c in p[1:-1]:
+                    if c in config["keep"]:
+                        tags.add(c)
+            log.debug("tags for %s: %s", mid, str(tags))
+            try:
+                m.freeze()
+                for t in tags:
+                    m.add_tag(t)
+                m.remove_tag("new")
+            finally:
+                m.thaw()
+
+        db.end_atomic()
+
+
+if __name__ == "__main__":
+    main()

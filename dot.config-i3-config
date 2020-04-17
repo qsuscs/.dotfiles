@@ -163,3 +163,7 @@ bindsym $mod+Shift+F1 exec setxkbmap de
 bindsym $mod+F2 exec setxkbmap de ru
 bindsym $mod+F3 exec setxkbmap gr
 bindsym $mod+F4 exec setxkbmap us
+
+# Local Variables:
+# mode: conf
+# End:

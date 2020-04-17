@@ -3,6 +3,7 @@
 
 [ui]
 username = Thomas Schneider <qsx@chaotikum.eu>
+tweakdefaults = true
 
 [email]
 method = sendmail
@@ -11,19 +12,12 @@ method = sendmail
 gpg =
 histedit =
 mq =
-pager =
 patchbomb =
-progress =
 purge =
 rebase =
-record =
 remotenames =
 strip =
 zeroconf =
-
-[diff]
-git = true
-showfunc = true
 
 [alias]
 describe = log -r . --template '{latesttag}-{latesttagdistance}-{node|short}\n'

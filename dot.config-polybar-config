@@ -1,8 +1,10 @@
+# -*- conf -*-
 [colors]
 background = #222
 background-alt = #444
 foreground = #dfdfdf
-foreground-alt = #555
+#foreground-alt = #555
+foreground-alt = #00ff00
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
@@ -27,7 +29,7 @@ border-size = 4
 border-color = #00000000
 
 padding-left = 0
-padding-right = 2
+padding-right = 1
 
 module-margin-left = 0
 module-margin-right = 1
@@ -179,11 +181,11 @@ format-disconnected =
 type = internal/date
 interval = 1
 
-date =
-date-alt = " %Y-%m-%d"
+date-alt =
+date = " %Y-%m-%d"
 
-time = %H:%M
-time-alt = %H:%M:%S
+time-alt = %H:%M
+time = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}

@@ -54,21 +54,14 @@
       :init (exec-path-from-shell-initialize))
     (setenv "LANG" "de_DE.UTF-8"))
 
-(use-package projectile
-  :config (projectile-mode 1)
-  :bind-keymap ("C-c p" . projectile-command-map)
-  :defer nil)
-
 (use-package company
   :bind (:map company-mode-map
 	      ([remap completion-at-point] . #'company-complete))
   :config
-  (global-company-mode)
   (setq company-tooltip-align-annotations t
 	company-minimum-prefix-length 1))
 (use-package company-math
   :config
-  (add-to-list 'company-backends 'company-math-symbols-unicode)
   (add-hook 'TeX-mode-hook (defun qsx-TeX-mode-hook-company ()
 			     (setq-local company-backends
 					 (append '((company-math-symbols-latex company-latex-commands))
@@ -86,7 +79,6 @@
   :config (add-to-list 'company-backends 'company-ansible))
 (use-package company-shell
   :config (add-to-list 'company-backends '(company-shell company-shell-env)))
-(use-package company-lsp)
 
 (semantic-mode 1)
 (use-package srefactor
@@ -100,10 +92,12 @@
   (advice-add 'python-mode :before 'elpy-enable))
 
 (use-package lsp-mode
-  :commands lsp
-  :config (require 'lsp-clients))
+  :commands lsp)
 
 (use-package lsp-ui)
+
+(use-package company-lsp
+  :hook (company-mode . yas-minor-mode))
 
 (use-package mercurial
   :ensure nil
@@ -147,11 +141,6 @@
 	helm-recentf-fuzzy-match t
 	helm-ff-file-name-history-use-recentf t
 	helm-echo-input-in-header-line t))
-(use-package helm-projectile
-  :config
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on)
-  :after (projectile helm))
 (use-package helm-rg
   :after helm)
 

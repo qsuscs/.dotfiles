@@ -1,12 +1,11 @@
+# -*- shell-script -*-
 if [ "$XPROFILE_RUN" != "yes" ]; then
 	export XPROFILE_RUN=yes
-	#export GDK_SCALE=2
-	#xrandr --dpi 192
 	export TERMINAL=kitty-1
 	[ -f ~/.fehbg ] && ~/.fehbg
-	xss-lock -- i3lock -c 555555 -f &
+	xss-lock -- ~/.local/bin/i3lock-wrapper &
 	owncloud &
-	#nm-applet &
+	type nm-applet >/dev/null && nm-applet &
 	(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
 fi
 export XPROFILE_RUN=yes
