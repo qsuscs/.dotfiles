@@ -217,11 +217,12 @@
 (add-hook 'mail-mode-hook #'turn-on-auto-fill)
 (add-hook 'mail-mode-hook #'mail-text)
 
+(defun qsx-enable-TeX-fold-mode ()
+  (TeX-fold-mode 1))
+
 (use-package tex
   :if (display-graphic-p)
   :ensure auctex
-  :init
-  (setq reftex-plug-into-AUCTeX t)
   :config
   (setq TeX-auto-save nil
 	TeX-parse-self t
@@ -229,7 +230,16 @@
 	font-latex-fontify-sectioning 'color
 	font-latex-fontify-script 'multi-level
 	fill-column 80)
-  (add-hook 'TeX-mode-hook #'turn-on-auto-fill))
+  (dolist (f '(qsx-enable-TeX-fold-mode
+	       turn-on-auto-fill
+	       prettify-symbols-mode))
+    (add-hook 'TeX-mode-hook f)))
+
+(use-package reftex
+  :if (display-graphic-p)
+  :config
+  (setq reftex-plug-into-AUCTeX t)
+  (add-hook 'TeX-mode-hook #'reftex-mode))
 
 (use-package auctex-latexmk
   :if (display-graphic-p)
