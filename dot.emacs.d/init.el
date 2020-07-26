@@ -278,6 +278,21 @@
 
 (add-hook 'text-mode-hook #'turn-on-auto-fill)
 
+(use-package json-mode)
+
+(use-package adoc-mode)
+
+(use-package dpkg-dev-el
+  ;; In Debian, it’s provided by a debian package, no need to install from MELPA
+  :if (not (file-exists-p "/etc/debian_version")))
+
+(use-package haskell-mode)
+
+(use-package ledger-mode
+  :config
+  (setq ledger-default-date-format "%Y-%m-%d"
+	ledger-use-iso-dates t))
+
 ;; Use keypad comma as decimal separator
 (use-package calc
   :config
