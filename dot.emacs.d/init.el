@@ -269,7 +269,9 @@
 (add-hook 'text-mode-hook #'turn-on-auto-fill)
 
 ;; Use keypad comma as decimal separator
-(define-key calc-digit-map (kbd "<kp-separator">) ".")
+(use-package calc
+  :config
+  (define-key calc-digit-map (kbd "<kp-separator>") "."))
 
 ;;; Mail
 (use-package gnus
