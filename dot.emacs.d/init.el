@@ -188,8 +188,6 @@
 
 (show-paren-mode 1)
 
-(use-package salt-mode)
-
 (use-package ansible)
 (use-package poly-ansible)
 
