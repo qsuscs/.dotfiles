@@ -78,6 +78,7 @@
 						 company-backends)))))
 (use-package company-auctex
   :if (display-graphic-p)
+  :ensure nil
   :config (company-auctex-init))
 (use-package company-bibtex
   :if (display-graphic-p)
@@ -230,7 +231,7 @@
 
 (use-package tex
   :if (display-graphic-p)
-  :ensure auctex
+  :ensure nil
   :config
   (setq TeX-auto-save nil
 	TeX-parse-self t
@@ -251,6 +252,7 @@
 
 (use-package auctex-latexmk
   :if (display-graphic-p)
+  :ensure nil
   :config
   (auctex-latexmk-setup)
   (setq TeX-command-default "LatexMk"))
