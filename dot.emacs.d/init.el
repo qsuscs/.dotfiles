@@ -27,6 +27,15 @@
       auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
       auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
       )
+(defun qsx-backup-enable-predicate (name)
+  (let ((directory (file-name-directory (file-truename (expand-file-name name))))
+	(auto-save-list-directory
+	 (file-name-as-directory
+	  (file-truename (expand-file-name "auto-save-list" user-emacs-directory)))))
+    (if (string= directory auto-save-list-directory)
+	nil
+      (normal-backup-enable-predicate name))))
+(setq backup-enable-predicate #'qsx-backup-enable-predicate)
 
 (let ((default-directory
 	(concat user-emacs-directory
