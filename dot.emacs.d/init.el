@@ -316,6 +316,7 @@
    message-sendmail-envelope-from 'header
    message-send-mail-function 'message-send-mail-with-sendmail
    message-elide-ellipsis "[…]"
+   message-forward-as-mime t
    ;; message-alternative-emails
    message-confirm-send t
    mail-user-agent 'gnus-user-agent
