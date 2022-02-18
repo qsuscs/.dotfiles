@@ -188,7 +188,11 @@ output * {
        bg ~/Pictures/rainbow_colorful_background_lines_patterns_66008_2560x1440.png fill
 }
 
+seat * xcursor_theme "Adwaita"
+
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec mako
 exec swayidle -w lock "swaylock -f" before-sleep "loginctl lock-session" timeout 600 'swaymsg "output * dpms off"; loginctl lock-session' resume 'swaymsg "output * dpms on"'
 # Lat/Lon for Aachen
-exec wlsunset -l 50.8 -L 6.0
+exec wlsunset -l 50.8 -L 6.1
+exec nm-applet --indicator
