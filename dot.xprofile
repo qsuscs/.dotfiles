@@ -2,11 +2,11 @@
 if [ "$XPROFILE_RUN" != "yes" ]; then
 	export XPROFILE_RUN=yes
 	export TERMINAL=kitty-1
-	export GDK_SCALE=2
-	xrandr --dpi 192
 	[ -f ~/.fehbg ] && ~/.fehbg
 	xss-lock -- ~/.local/bin/i3lock-wrapper &
+	owncloud &
 	type nm-applet >/dev/null && nm-applet &
 	(while ! pidof i3; do sleep 1; done; exec polybar -r top) &
 fi
 export XPROFILE_RUN=yes
+systemctl --user start compton

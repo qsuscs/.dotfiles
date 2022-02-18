@@ -337,12 +337,25 @@
    smime-CA-directory "/etc/ssl/certs"
    gnus-select-method '(nntp "news.cis.dfn.de"
 			     (nntp-open-connection-function nntp-open-ssl-stream)
-			     (nntp-port-number 563))
-   gnus-secondary-select-methods '((nnmaildir "mail"
-					      (directory "~/.nnmaildir")
-					      (nnir-search-engine notmuch)))
-   nnir-notmuch-program "/home/qsx/.local/bin/notmuch-gnus"
-   nnir-notmuch-remove-prefix (concat (getenv "HOME") "/.nnmaildir/"))
+			     (nntp-port-number 563)))
+  (let ((maildir (cl-find-if #'file-directory-p
+			     (mapcar (lambda (x) (concat (getenv "HOME") x))
+				     '("/.nnmaildir"
+				       "/.maildir"
+				       "/Maildir"))))
+	(notmuch (let ((notmuch-gnus (concat (getenv "HOME") "/.local/bin/notmuch-gnus")))
+		   (if (file-executable-p notmuch-gnus)
+		       notmuch-gnus
+		     "notmuch")))
+	(notmuch-database-path (car (process-lines "notmuch" "config" "get" "database.path"))))
+    (setq
+     gnus-secondary-select-methods
+     `((nnmaildir
+	"mail"
+	(directory ,maildir)
+	(gnus-search-engine gnus-search-notmuch
+			    (program ,notmuch)
+			    (remove-prefix ,(concat notmuch-database-path "/")))))))
   (add-hook 'message-setup-hook (defun qsx-message-add-my-headers ()
 				  (message-add-header "Openpgp: id=E384009D3B54DCD321BF953295EE94A432583DB1; url=https://keys.openpgp.org/vks/v1/by-fingerprint/E384009D3B54DCD321BF953295EE94A432583DB1; preference=signencrypt"))))
 
