@@ -1,0 +1,6 @@
+#!/bin/sh
+set -x
+pkill -USR1 -u `id -u` dunst
+/usr/bin/i3lock -n -i ~/.i3lock.png &
+trap "kill $!; pkill -USR2 -u `id -u` dunst" EXIT
+wait $!

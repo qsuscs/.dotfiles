@@ -21,3 +21,5 @@
 	ff = only
 [sendemail]
 	bcc = fcc-sent@qsuscs.de
+[init]
+	defaultBranch = main

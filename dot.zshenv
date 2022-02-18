@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-export GOPATH=~/src/go/
+export GOPATH=~/src/go
 export LESS="FRX"
 export PATH=${PATH/::/:}
 export GPG_TTY=$(tty)
@@ -19,7 +19,11 @@ path=(
     /sbin(/N)
     $path
 )
-typeset -xU path
+manpath=(
+    ~/.local/share/man(/N)
+    $manpath
+)
+typeset -xU path manpath
 [ -S ~/.gnupg/S.gpg-agent.ssh ] && export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh
 [ -S /run/user/$EUID/gnupg/S.gpg-agent.ssh ] && export SSH_AUTH_SOCK=/run/user/$EUID/gnupg/S.gpg-agent.ssh
 (( $+commands[rbenv] )) && eval "$(rbenv init -)"

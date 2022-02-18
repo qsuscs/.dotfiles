@@ -3,7 +3,7 @@ set -e
 set -x
 mbsync -a || true
 notmuch new
-[ -d ~/.maildir/GMail ] && (cd ~/.maildir/GMail && gmi sync)
+[ -d ~/.maildir/GMail ] && (cd ~/.maildir/GMail && gmi sync || true)
 new=$(notmuch search --output=messages tag:new | xargs)
 [ -z "$new" ] && exit
 notmuch config set query.new "$new"

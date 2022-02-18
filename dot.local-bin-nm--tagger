@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.7
+#!/usr/bin/env python3
 """Tagging script based on mail folder names for Notmuch
 
 This scripts iterates through all messages with ``tag:new``, and replaces that

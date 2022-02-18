@@ -9,12 +9,13 @@
   (package-refresh-contents)
   (package-install 'use-package t))
 (require 'use-package)
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure t
+      use-package-verbose t)
 
-(defvar --backup-directory (concat user-emacs-directory "backups"))
-(if (not (file-exists-p --backup-directory))
-        (make-directory --backup-directory t))
-(setq backup-directory-alist `(("." . ,--backup-directory)))
+(let ((--backup-directory (concat user-emacs-directory "backups")))
+  (unless (file-exists-p --backup-directory)
+    (make-directory --backup-directory t))
+  (setq backup-directory-alist `(("." . ,--backup-directory))))
 (setq make-backup-files t               ; backup of a file the first time it is saved.
       backup-by-copying t               ; don't clobber symlinks
       version-control t                 ; version numbers for backup files
@@ -26,6 +27,15 @@
       auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
       auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
       )
+(defun qsx-backup-enable-predicate (name)
+  (let ((directory (file-name-directory (file-truename (expand-file-name name))))
+	(auto-save-list-directory
+	 (file-name-as-directory
+	  (file-truename (expand-file-name "auto-save-list" user-emacs-directory)))))
+    (if (string= directory auto-save-list-directory)
+	nil
+      (normal-backup-enable-predicate name))))
+(setq backup-enable-predicate #'qsx-backup-enable-predicate)
 
 (let ((default-directory
 	(concat user-emacs-directory
@@ -68,6 +78,7 @@
 						 company-backends)))))
 (use-package company-auctex
   :if (display-graphic-p)
+  :ensure nil
   :config (company-auctex-init))
 (use-package company-bibtex
   :if (display-graphic-p)
@@ -178,8 +189,6 @@
 
 (show-paren-mode 1)
 
-(use-package salt-mode)
-
 (use-package ansible)
 (use-package poly-ansible)
 
@@ -217,11 +226,12 @@
 (add-hook 'mail-mode-hook #'turn-on-auto-fill)
 (add-hook 'mail-mode-hook #'mail-text)
 
+(defun qsx-enable-TeX-fold-mode ()
+  (TeX-fold-mode 1))
+
 (use-package tex
   :if (display-graphic-p)
-  :ensure auctex
-  :init
-  (setq reftex-plug-into-AUCTeX t)
+  :ensure nil
   :config
   (setq TeX-auto-save nil
 	TeX-parse-self t
@@ -229,10 +239,20 @@
 	font-latex-fontify-sectioning 'color
 	font-latex-fontify-script 'multi-level
 	fill-column 80)
-  (add-hook 'TeX-mode-hook #'turn-on-auto-fill))
+  (dolist (f '(qsx-enable-TeX-fold-mode
+	       turn-on-auto-fill
+	       prettify-symbols-mode))
+    (add-hook 'TeX-mode-hook f)))
+
+(use-package reftex
+  :if (display-graphic-p)
+  :config
+  (setq reftex-plug-into-AUCTeX t)
+  (add-hook 'TeX-mode-hook #'reftex-mode))
 
 (use-package auctex-latexmk
   :if (display-graphic-p)
+  :ensure nil
   :config
   (auctex-latexmk-setup)
   (setq TeX-command-default "LatexMk"))
@@ -268,6 +288,26 @@
 
 (add-hook 'text-mode-hook #'turn-on-auto-fill)
 
+(use-package json-mode)
+
+(use-package adoc-mode)
+
+(use-package dpkg-dev-el
+  ;; In Debian, it’s provided by a debian package, no need to install from MELPA
+  :if (not (file-exists-p "/etc/debian_version")))
+
+(use-package haskell-mode)
+
+(use-package ledger-mode
+  :config
+  (setq ledger-default-date-format "%Y-%m-%d"
+	ledger-use-iso-dates t))
+
+;; Use keypad comma as decimal separator
+(use-package calc
+  :config
+  (define-key calc-digit-map (kbd "<kp-separator>") "."))
+
 ;;; Mail
 (use-package gnus
   :config
@@ -276,6 +316,7 @@
    message-sendmail-envelope-from 'header
    message-send-mail-function 'message-send-mail-with-sendmail
    message-elide-ellipsis "[…]"
+   message-forward-as-mime t
    ;; message-alternative-emails
    message-confirm-send t
    mail-user-agent 'gnus-user-agent
@@ -316,7 +357,7 @@
 			    (program ,notmuch)
 			    (remove-prefix ,(concat notmuch-database-path "/")))))))
   (add-hook 'message-setup-hook (defun qsx-message-add-my-headers ()
-                                  (message-add-header "Openpgp: id=E384009D3B54DCD321BF953295EE94A432583DB1; url=https://pgp.mit.edu/pks/lookup?op=get&search=0x95EE94A432583DB1; preference=signencrypt"))))
+				  (message-add-header "Openpgp: id=E384009D3B54DCD321BF953295EE94A432583DB1; url=https://keys.openpgp.org/vks/v1/by-fingerprint/E384009D3B54DCD321BF953295EE94A432583DB1; preference=signencrypt"))))
 
 (use-package gnus-alias
   :ensure t

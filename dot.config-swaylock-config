@@ -1,0 +1,4 @@
+image=~/.i3lock.png
+show-keyboard-layout
+indicator-caps-lock
+show-failed-attempts
