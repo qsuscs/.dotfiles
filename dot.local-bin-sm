@@ -1,5 +1,13 @@
 #!/bin/sh
 set -e
+case $(hostname -s) in
+	naboo)
+		format='%u%r %3n %10d %17f %22F %t %i%S'
+		;;
+	*)
+		format='%u%r %3n %10d %17f %8F %t %i%S'
+		;;
+esac
 set -x
 mbsync -a || true
 notmuch new
@@ -11,5 +19,5 @@ notmuch tag -new -- tag:new and folder:GMail/mail
 nm-tagger
 export MAILSEQ="${MBLAZE:-$HOME/.mblaze}/seq.sm"
 export MBLAZE_PAGER=""
-msearch -- --exclude=false query:new | mthread | mseq -S | mscan -f '%u%r %3n %10d %17f %8F %t %i%S'
+msearch -- --exclude=false query:new | mthread | mseq -S | mscan -f "$format"
 type mu > /dev/null && mu index || true
