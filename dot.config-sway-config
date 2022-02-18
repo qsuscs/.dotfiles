@@ -180,9 +180,14 @@ bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 #bindsym $mod+F4 exec setxkbmap us
 
 input * {
-	xkb_layout de
-	xkb_variant bone
+	xkb_layout de,us,de,gr
+	xkb_variant bone,,ru,
 }
+bindsym $mod+Mod1+space input * xkb_switch_layout next
+bindsym $mod+F1 input * xkb_switch_layout 0
+bindsym $mod+F2 input * xkb_switch_layout 1
+bindsym $mod+F3 input * xkb_switch_layout 2
+bindsym $mod+F4 input * xkb_switch_layout 3
 
 output * {
        bg ~/Pictures/rainbow_colorful_background_lines_patterns_66008_2560x1440.png fill
