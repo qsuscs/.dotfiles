@@ -1,6 +1,62 @@
 # -*- shell-script -*-
-zstyle :prompt:grml:right:setup use-rprompt false
+
 . ~/.zshrc.from_grml
+
+zstyle :prompt:grml:right:setup use-rprompt false
+zstyle :prompt:grml:left:items:percent pre $'\n'
+
+# With upstream grml config, both path and vcs components of the prompt tokens
+# always contain a trailing space, so that 'path vcs percent' is separated by
+# one space each, but if vcs is empty, there is still only one space between
+# path and percent.  With the :…:percent pre zstyle above, however, we have a
+# newline in between, and the trailing spaces are superfluous—but we still need
+# one between path and vcs.  Thus, we have no trailing space in path, but a
+# leading one in vcs.
+
+function qsx_theme_path() {
+    emulate -L zsh
+
+    if (( !vcscalled )); then
+	vcs_info
+	vcscalled=1
+    fi
+    # displayed length of $vcs_info_msg_0_,
+    # cf. https://stackoverflow.com/a/10564427
+    local zero='%([BSUbfksu]|([FK]|){*})'
+    local len=${#${(S%%)vcs_info_msg_0_//$~zero/}}
+    # "%-${len}<": fill the remaining terminal width, but leave room for vcs
+    REPLY="%-${len}<…<%~%<<"
+}
+grml_theme_add_token path-qsx -f qsx_theme_path '%B' '%b'
+local -a items
+if zstyle -a :prompt:grml:left:setup items items; then
+    # find index of "path"
+    local i=${items[(i)path]}
+    # if it exists …
+    if (( ${+items[$i]} )); then
+	# … replace with our version …
+	items[$i]="path-qsx"
+	# … and apply
+	zstyle :prompt:grml:left:setup items ${items}
+    fi
+    unset i
+fi
+unset items
+
+function qsx_fix_vcs_info() {
+    emulate -L zsh
+
+    for i in actionformats formats; do
+	local -a fs
+	zstyle -a ':vcs_info:*' $i fs || continue
+	(( ${+fs[1]} )) || continue
+	# strip trailing space, but add leading
+	fs[1]=" ${fs[1]% }"
+	zstyle ':vcs_info:*' $i $fs
+    done
+}
+qsx_fix_vcs_info
+
 (( $+commands[bsdtar] )) && alias tar=bsdtar
 (( $+commands[nvim] )) && alias vim=nvim
 alias g=git
@@ -15,7 +71,6 @@ fi
 if (( $+commands[rsync] )); then
     alias rs="rsync -vahPi"
 fi
-zstyle :prompt:grml:left:items:percent pre $'\n'
 gpg-connect-agent /bye
 ssh-add -l
 function countdown {
