@@ -58,7 +58,11 @@ function qsx_fix_vcs_info() {
 qsx_fix_vcs_info
 
 (( $+commands[bsdtar] )) && alias tar=bsdtar
-(( $+commands[nvim] )) && alias vim=nvim
+(( $+commands[nvim] )) && function vim {
+	command nvim "$@"
+	# Reset terminal cursor
+	printf "\033[0 q"
+}
 alias g=git
 alias ec="emacsclient -n"
 alias et="emacsclient -t"
