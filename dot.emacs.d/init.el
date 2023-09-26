@@ -124,17 +124,16 @@
 	 ("C-:" . avy-goto-char-2)
 	 ("C-," . avy-goto-line)))
 
-(use-package helm-config
-  :ensure nil
-  :bind-keymap ("C-c h" . helm-command-prefix)
-  :bind (:map helm-command-map
-	      ("o" . #'helm-occur)))
 (use-package helm
+  :defer nil
+  :bind-keymap ("C-c h" . helm-command-map)
   :bind (("M-x" . #'helm-M-x)
 	 ("M-y" . #'helm-show-kill-ring)
 	 ("C-x b" . #'helm-mini)
 	 ("C-x C-f" . #'helm-find-files)
-	 ("C-h SPC" . #'helm-all-mark-rings))
+	 ("C-h SPC" . #'helm-all-mark-rings)
+	 :map helm-command-map
+	 ("o" . #'helm-occur))
   :config
   (helm-mode 1)
   (helm-autoresize-mode t)
