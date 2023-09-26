@@ -1,13 +1,17 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")
-	("gnu" . "https://elpa.gnu.org/packages/")))
+      '(("melpa-stable" . "https://stable.melpa.org/packages/")
+	("melpa-unstable" . "https://melpa.org/packages/")
+	("gnu" . "https://elpa.gnu.org/packages/"))
+
+      package-archive-priorities '(("melpa-stable" . 1)
+				   ("gnu" . 1)))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'use-package t))
+  (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t
       use-package-verbose t)
@@ -61,6 +65,8 @@
       :init (exec-path-from-shell-initialize))
     (setenv "LANG" "de_DE.UTF-8"))
 
+;; https://github.com/company-mode/company-mode/pull/1101
+(add-to-list 'package-pinned-packages '("company" . "melpa-unstable"))
 (use-package company
   :bind (:map company-mode-map
 	      ([remap completion-at-point] . #'company-complete))
