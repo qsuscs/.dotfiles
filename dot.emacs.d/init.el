@@ -65,14 +65,17 @@
       :init (exec-path-from-shell-initialize))
     (setenv "LANG" "de_DE.UTF-8"))
 
+(use-package yasnippet)
+
 ;; https://github.com/company-mode/company-mode/pull/1101
 (add-to-list 'package-pinned-packages '("company" . "melpa-unstable"))
 (use-package company
   :bind (:map company-mode-map
 	      ([remap completion-at-point] . #'company-complete))
   :config
-  (setq company-tooltip-align-annotations t
-	company-minimum-prefix-length 1))
+  (setq company-tooltip-align-annotations t)
+  :hook (company-mode . yas-minor-mode))
+
 (use-package company-math
   :config
   (add-hook 'TeX-mode-hook (defun qsx-TeX-mode-hook-company ()
