@@ -101,11 +101,7 @@
 
 (use-package lsp-mode
   :commands lsp)
-
 (use-package lsp-ui)
-
-(use-package company-lsp
-  :hook (company-mode . yas-minor-mode))
 
 (use-package mercurial
   :ensure nil
