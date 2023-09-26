@@ -303,6 +303,7 @@
 
 ;;; Mail
 (use-package gnus
+  :defer t
   :config
   (setq
    message-kill-buffer-on-exit t
