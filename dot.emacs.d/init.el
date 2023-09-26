@@ -162,14 +162,7 @@
 
 (use-package meson-mode)
 
-(if (< emacs-major-version 26)
-    (use-package linum-relative
-      :ensure t
-      :config
-      (linum-mode)
-      (linum-relative-global-mode)
-      (setq linum-relative-current-symbol ""))
-  (setq-default display-line-numbers 'relative))
+(setq-default display-line-numbers 'relative)
 
 (use-package stripe-buffer
   :config
