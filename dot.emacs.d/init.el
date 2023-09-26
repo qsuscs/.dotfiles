@@ -118,8 +118,7 @@
 	 ("C-c m m" . #'magit-status)
 	 ("C-c m p" . #'magit-dispatch-popup)
 	 ("C-c m f" . #'magit-file-popup)
-	 ("C-c m d" . #'magit-diff-buffer-file))
-  :config (global-magit-file-mode))
+	 ("C-c m d" . #'magit-diff-buffer-file)))
 
 (use-package ace-window
   :bind ("M-o" . ace-window)
