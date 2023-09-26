@@ -12,7 +12,7 @@
 (setq use-package-always-ensure t
       use-package-verbose t)
 
-(let ((--backup-directory (concat user-emacs-directory "backups")))
+(let ((--backup-directory (locate-user-emacs-file "backups")))
   (unless (file-exists-p --backup-directory)
     (make-directory --backup-directory t))
   (setq backup-directory-alist `(("." . ,--backup-directory))))
@@ -28,27 +28,24 @@
       auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
       )
 (defun qsx-backup-enable-predicate (name)
-  (let ((directory (file-name-directory (file-truename (expand-file-name name))))
+  (let ((directory
+	 (file-name-directory (file-truename (expand-file-name name))))
 	(auto-save-list-directory
 	 (file-name-as-directory
-	  (file-truename (expand-file-name "auto-save-list" user-emacs-directory)))))
+	  (locate-user-emacs-file "auto-save-list"))))
     (if (string= directory auto-save-list-directory)
 	nil
       (normal-backup-enable-predicate name))))
 (setq backup-enable-predicate #'qsx-backup-enable-predicate)
 
-(let ((default-directory
-	(concat user-emacs-directory
-		(convert-standard-filename "elisp/"))))
+(let ((default-directory (locate-user-emacs-file "elisp")))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 
 (load "server")
 (unless (server-running-p) (server-start))
 
-(setq custom-file
-      (concat user-emacs-directory
-	      (convert-standard-filename "custom.el")))
+(setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file :noerror)
 
 (load-theme 'deeper-blue)
