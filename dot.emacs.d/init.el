@@ -144,6 +144,7 @@
   :defer nil
   :bind-keymap ("C-c h" . helm-command-map)
   :bind (("M-x" . #'helm-M-x)
+	 ("s-x" . #'execute-extended-command)
 	 ("M-y" . #'helm-show-kill-ring)
 	 ("C-x b" . #'helm-mini)
 	 ("C-x C-f" . #'helm-find-files)
