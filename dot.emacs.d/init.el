@@ -109,8 +109,15 @@
   (advice-add 'python-mode :before 'elpy-enable))
 
 (use-package lsp-mode
-  :commands lsp)
-(use-package lsp-ui)
+  :commands lsp
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+  :init
+  (setq read-process-output-max (* 1024 1024) ;; 1 MiB
+	gc-cons-threshold 6400000))
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+(use-package helm-lsp
+  :commands helm-lsp-workspace-symbol)
 
 (use-package mercurial
   :ensure nil
