@@ -199,8 +199,12 @@
 (use-package yaml-mode
   :config
   (add-hook 'yaml-mode-hook
-	    (defun qsx-hl-indent-mode-hook ()
-	      (highlight-indentation-mode))))
+	    (defun qsx-yaml-hl-indent-mode-hook ()
+	      (highlight-indentation-mode)
+	      (highlight-indentation-set-offset yaml-indent-offset)))
+  (add-hook 'yaml-mode-hook
+	    (defun qsx-no-indent-tabs-mode ()
+	      (setq indent-tabs-mode nil))))
 
 (use-package dockerfile-mode)
 
