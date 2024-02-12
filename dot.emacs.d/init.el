@@ -137,7 +137,8 @@
 (use-package avy
   :bind (("C-." . avy-goto-char-timer)
 	 ("C-:" . avy-goto-char-2)
-	 ("C-," . avy-goto-line)))
+	 ("C-," . avy-goto-line))
+  :custom (avy-keys '(?c ?t ?i ?e ?n ?r ?s ?g)))
 
 (use-package helm
   :defer nil
