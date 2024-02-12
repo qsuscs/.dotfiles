@@ -174,6 +174,8 @@
 
 (use-package meson-mode)
 
+(use-package systemd)
+
 (setq-default display-line-numbers 'relative)
 
 (use-package stripe-buffer
