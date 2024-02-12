@@ -77,6 +77,11 @@ if (( $+commands[exa] )); then
     alias l="exa -g -l --git"
     alias la="exa -g -la --git"
 fi
+if (( $+commands[eza] )); then
+    alias ls="eza"
+    alias l="eza -g -l --git"
+    alias la="eza -g -la --git"
+fi
 if (( $+commands[rsync] )); then
     alias rs="rsync -vahPi"
 fi
