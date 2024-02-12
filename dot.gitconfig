@@ -11,7 +11,7 @@
 	colorlog = log --date=relative --format=\"%Cblue%h%Creset %C(yellow)%an%Creset %Cgreen%ad%Creset%C(auto)%d%Creset %s\" --topo-order
 	push-all = !git remote | xargs -L1 git push
 [push]
-	default = simple
+	default = current
 [instaweb]
 	local = true
 	httpd = webrick
