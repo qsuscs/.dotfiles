@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+import datetime
+
+import gi
+
+gi.require_version("UPowerGlib", "1.0")
+from gi.repository import UPowerGlib as upower
+
+client = upower.Client.new()
+dev = client.get_display_device()
+
+items = []
+
+pct = dev.get_property("percentage")
+energy = dev.get_property("energy")
+energy_full = dev.get_property("energy-full")
+items.append(f"{pct} % ({energy:.4g} Wh / {energy_full:.4g} Wh), ")
+
+state = upower.Device.state_to_string(dev.get_property("state"))
+items.append(state)
+
+energy_rate = dev.get_property("energy-rate")
+if energy_rate != 0:
+    items.append(f" @ {energy_rate:.4g} W")
+
+time_to_empty = dev.get_property("time-to-empty")
+if time_to_empty > 0:
+    items.append(f", {datetime.timedelta(seconds=time_to_empty)} until empty")
+
+time_to_full = dev.get_property("time-to-full")
+if time_to_full > 0:
+    items.append(f", {datetime.timedelta(seconds=time_to_full)} until full")
+
+print("".join(items))
