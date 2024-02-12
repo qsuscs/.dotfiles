@@ -250,7 +250,17 @@
   (dolist (f '(qsx-enable-TeX-fold-mode
 	       turn-on-auto-fill
 	       prettify-symbols-mode))
-    (add-hook 'TeX-mode-hook f)))
+    (add-hook 'TeX-mode-hook f))
+  (TeX-add-symbols
+   '("cref" TeX-arg-ref)
+   '("Cref" TeX-arg-ref)
+   '("cpageref" TeX-arg-ref)
+   '("Cpageref" TeX-arg-ref))
+  (TeX-ispell-skip-setcar
+   '(("\\\\[cC]ref" ispell-tex-arg-end 1)
+     ("\\\\cite" ispell-tex-arg-end)
+     ("\\\\iac" ispell-tex-arg-end)
+     ("\\\\\\(text\\)?tt" ispell-tex-arg-end))))
 
 (use-package reftex
   :if (display-graphic-p)
