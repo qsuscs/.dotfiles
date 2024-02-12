@@ -63,6 +63,11 @@ qsx_fix_vcs_info
 	# Reset terminal cursor
 	printf "\033[0 q"
 }
+if ! (( $+commands[open] )) && (( $+commands[gio] )); then
+       function open {
+               gio open "$@" >/dev/null 2>/dev/null
+       }
+fi
 alias g=git
 alias ec="emacsclient -n"
 alias et="emacsclient -t"
