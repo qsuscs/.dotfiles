@@ -1,5 +1,5 @@
+;; See early-init.el for further package stuff
 (require 'package)
-(setq package-enable-at-startup nil)
 (setq package-archives
       '(("melpa-stable" . "https://stable.melpa.org/packages/")
 	("melpa-unstable" . "https://melpa.org/packages/")
