@@ -111,6 +111,9 @@
   :init
   (add-hook 'python-base-mode-hook 'pet-mode -10))
 
+(defun qsx-no-indent-tabs-mode ()
+  (setq indent-tabs-mode nil))
+
 (use-package lsp-mode
   :commands lsp
   :bind-keymap ("s-l" . lsp-command-map)
@@ -219,9 +222,7 @@
 	    (defun qsx-yaml-hl-indent-mode-hook ()
 	      (highlight-indentation-mode)
 	      (highlight-indentation-set-offset yaml-indent-offset)))
-  (add-hook 'yaml-mode-hook
-	    (defun qsx-no-indent-tabs-mode ()
-	      (setq indent-tabs-mode nil))))
+  (add-hook 'yaml-mode-hook #'qsx-no-indent-tabs-mode))
 
 (use-package dockerfile-mode)
 
