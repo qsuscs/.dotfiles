@@ -35,8 +35,10 @@
   (let ((directory
 	 (file-name-directory (file-truename (expand-file-name name))))
 	(auto-save-list-directory
-	 (file-name-as-directory
-	  (locate-user-emacs-file "auto-save-list"))))
+         (file-truename
+          (expand-file-name
+           (file-name-as-directory
+            (locate-user-emacs-file "auto-save-list"))))))
     (if (string= directory auto-save-list-directory)
 	nil
       (normal-backup-enable-predicate name))))
