@@ -150,6 +150,11 @@
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
+(use-package editorconfig
+  :defer nil
+  :config
+  (editorconfig-mode 1))
+
 (use-package lsp-mode
   :commands lsp
   :bind-keymap ("s-l" . lsp-command-map)
