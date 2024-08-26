@@ -74,7 +74,8 @@
 	      ([remap completion-at-point] . #'company-complete))
   :config
   (setq company-tooltip-align-annotations t)
-  :hook (company-mode . yas-minor-mode))
+  :hook ((company-mode . yas-minor-mode)
+         (prog-mode . company-mode)))
 
 (use-package company-math
   :config
