@@ -69,8 +69,6 @@
 
 (use-package yasnippet)
 
-;; https://github.com/company-mode/company-mode/pull/1101
-(add-to-list 'package-pinned-packages '("company" . "melpa-unstable"))
 (use-package company
   :bind (:map company-mode-map
 	      ([remap completion-at-point] . #'company-complete))
