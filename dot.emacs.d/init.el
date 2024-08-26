@@ -309,9 +309,9 @@
 (setq column-number-mode t)
 
 (global-set-key (kbd "C-x C-k") #'kill-this-buffer)
-(global-set-key (kbd "C-M-y") '(lambda ()
-				 (interactive)
-				 (insert (gui-get-primary-selection))))
+(global-set-key (kbd "C-M-y") #'(lambda ()
+				  (interactive)
+				  (insert (gui-get-primary-selection))))
 
 (add-hook 'org-mode-hook #'turn-on-auto-fill)
 (setq org-list-allow-alphabetical t)
