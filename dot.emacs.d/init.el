@@ -111,6 +111,9 @@
   :init
   (add-hook 'python-base-mode-hook 'pet-mode -10))
 
+(use-package highlight-indentation
+  :hook python-base-mode)
+
 (defun qsx-no-indent-tabs-mode ()
   (setq indent-tabs-mode nil))
 
