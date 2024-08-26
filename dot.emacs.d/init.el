@@ -242,6 +242,10 @@
   :config
   (add-hook 'emacs-lisp-mode-hook #'qsx-no-indent-tabs-mode))
 
+(use-package macrostep
+  :bind (:map emacs-lisp-mode-map
+              ("C-c e" . macrostep-expand)))
+
 (use-package dockerfile-mode)
 
 (defun qsx-dont-show-line-numbers-hook ()
