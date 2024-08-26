@@ -101,7 +101,8 @@
 (semantic-mode 1)
 (use-package srefactor
   :bind (:map c-mode-map
-	      ("M-RET" . #'srefactor-refactor-at-point)))
+	      ("M-RET" . #'srefactor-refactor-at-point))
+  :after project)
 
 (use-package elpy
   :ensure t
