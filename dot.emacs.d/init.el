@@ -141,6 +141,15 @@
     (add-hook 'cperl-mode-hook h))
   (setq flymake-perlcritic-severity 1))
 
+(use-package treesit-auto
+  :demand t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (setq treesit-auto-langs (seq-difference treesit-auto-langs '(go gomod yaml)))
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
 (use-package lsp-mode
   :commands lsp
   :bind-keymap ("s-l" . lsp-command-map)
