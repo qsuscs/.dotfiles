@@ -155,6 +155,12 @@
   :config
   (editorconfig-mode 1))
 
+(use-package tide
+  :after (company flycheck)
+  :hook ((typescript-ts-mode . tide-setup)
+         (tsx-ts-mode . tide-setup)
+         (typescript-ts-mode . tide-hl-identifier-mode)))
+
 (use-package lsp-mode
   :commands lsp
   :bind-keymap ("s-l" . lsp-command-map)
