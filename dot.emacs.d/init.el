@@ -14,7 +14,8 @@
   (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t
-      use-package-verbose t)
+      use-package-verbose t
+      use-package-always-defer t)
 
 (let ((--backup-directory (locate-user-emacs-file "backups")))
   (unless (file-exists-p --backup-directory)
@@ -164,7 +165,7 @@
   :custom (avy-keys '(?c ?t ?i ?e ?n ?r ?s ?g)))
 
 (use-package helm
-  :defer nil
+  :demand t
   :bind-keymap ("C-c h" . helm-command-map)
   :bind (("M-x" . #'helm-M-x)
 	 ("s-x" . #'execute-extended-command)
