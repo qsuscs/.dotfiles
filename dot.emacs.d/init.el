@@ -104,11 +104,12 @@
 	      ("M-RET" . #'srefactor-refactor-at-point))
   :after project)
 
-(use-package elpy
-  :ensure t
-  :defer t
+(use-package python
+  :ensure nil
+  :hook ((python-mode python-ts-mode) . lsp))
+(use-package pet
   :init
-  (advice-add 'python-mode :before 'elpy-enable))
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
 
 (use-package lsp-mode
   :commands lsp
