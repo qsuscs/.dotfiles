@@ -227,7 +227,8 @@
 
 (dolist (h '(Man-mode-hook
 	     eshell-mode-hook
-	     ledger-report-mode-hook))
+	     ledger-report-mode-hook
+             special-mode-hook))
   (add-hook h #'qsx-dont-show-line-numbers-hook))
 
 (use-package pdf-tools
