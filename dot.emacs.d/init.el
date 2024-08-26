@@ -111,6 +111,7 @@
 
 (use-package lsp-mode
   :commands lsp
+  :bind-keymap ("s-l" . lsp-command-map)
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
   :init
   (setq read-process-output-max (* 1024 1024) ;; 1 MiB
