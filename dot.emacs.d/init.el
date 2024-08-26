@@ -367,6 +367,7 @@
 (use-package haskell-mode)
 
 (use-package ledger-mode
+  :pin melpa-unstable                   ; Last release 4.0.0 is incompatible
   :config
   (setq ledger-default-date-format "%Y-%m-%d"
 	ledger-use-iso-dates t))
