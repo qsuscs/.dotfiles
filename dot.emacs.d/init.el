@@ -131,6 +131,19 @@
 	 ("C-c m f" . #'magit-file-popup)
 	 ("C-c m d" . #'magit-diff-buffer-file)))
 
+(use-package transpose-frame
+  :init
+  (dolist (i '(("j" . transpose-frame)
+               ("i" . flip-frame)
+               ("o" . flop-frame)
+               ("r" . rotate-frame)
+               ("c" . rotate-frame-clockwise)
+               ("C" . rotate-frame-anticlockwise)))
+    (dolist (p '("s-j " "s-j s-"))
+      (bind-key
+       (concat p (car i))
+       (cdr i)))))
+
 (use-package ace-window
   :bind ("M-o" . ace-window)
   :config (setq aw-scope 'frame))
