@@ -52,10 +52,19 @@
 (load "server")
 (unless (server-running-p) (server-start))
 
+(use-package modus-themes
+  :defer nil
+  :init
+  (dolist
+      (hash
+       '("7613ef56a3aebbec29618a689e47876a72023bbd1b8393efc51c38f5ed3f33d1"
+         "c7a926ad0e1ca4272c90fce2e1ffa7760494083356f6bb6d72481b879afce1f2"))
+    (add-to-list 'custom-safe-themes hash))
+  :config
+  (load-theme 'modus-vivendi-tinted))
+
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file :noerror)
-
-(load-theme 'deeper-blue)
 
 (setq display-time-day-and-date t
       display-time-24hr-format t)
