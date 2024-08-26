@@ -313,8 +313,35 @@
 				  (interactive)
 				  (insert (gui-get-primary-selection))))
 
-(add-hook 'org-mode-hook #'turn-on-auto-fill)
-(setq org-list-allow-alphabetical t)
+(use-package org
+  :ensure nil
+  :config
+  (add-hook 'org-mode-hook #'turn-on-auto-fill)
+  (setq org-list-allow-alphabetical t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (dot . t)
+     (sqlite . t)))
+  (add-to-list
+   'org-latex-packages-alist
+   '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+  (add-to-list
+   'org-latex-packages-alist
+   '("AUTO" "babel" t ("pdflatex")))
+  (add-to-list
+   'org-latex-packages-alist
+   '("" "booktabs" nil))
+  (add-to-list
+   'org-latex-classes
+   '("scrartcl"
+     "\\documentclass{scrartcl}"
+     ("\\section{%s}" . "\\section*{%s}")
+     ("\\subsection{%s}" . "\\subsection*{%s}")
+     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+     ("\\paragraph{%s}" . "\\paragraph*{%s}")
+     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (setq org-latex-default-class "scrartcl"))
 
 (setq-default fill-column 80)
 
