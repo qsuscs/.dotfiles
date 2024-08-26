@@ -127,6 +127,20 @@
 (defun qsx-no-indent-tabs-mode ()
   (setq indent-tabs-mode nil))
 
+(use-package cperl-mode
+  :ensure nil
+  :init
+  (add-to-list 'major-mode-remap-alist '(perl-mode . cperl-mode))
+  (add-hook 'cperl-mode-hook #'qsx-no-indent-tabs-mode))
+
+(use-package flymake-perlcritic
+  :pin melpa-unstable                   ; Last release in 2012
+  :config
+  (dolist (h '(flymake-mode
+               flymake-perlcritic-setup))
+    (add-hook 'cperl-mode-hook h))
+  (setq flymake-perlcritic-severity 1))
+
 (use-package lsp-mode
   :commands lsp
   :bind-keymap ("s-l" . lsp-command-map)
