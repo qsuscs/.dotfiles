@@ -4,7 +4,7 @@
       '(("melpa-stable" . "https://stable.melpa.org/packages/")
 	("melpa-unstable" . "https://melpa.org/packages/")
 	("gnu" . "https://elpa.gnu.org/packages/"))
-
+      ;; Use melpa-unstable only when explicitly requested
       package-archive-priorities '(("melpa-stable" . 1)
 				   ("gnu" . 1)))
 (package-initialize)
