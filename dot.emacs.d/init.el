@@ -237,6 +237,11 @@
 	      (highlight-indentation-set-offset yaml-indent-offset)))
   (add-hook 'yaml-mode-hook #'qsx-no-indent-tabs-mode))
 
+(use-package elisp-mode
+  :ensure nil
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'qsx-no-indent-tabs-mode))
+
 (use-package dockerfile-mode)
 
 (defun qsx-dont-show-line-numbers-hook ()
