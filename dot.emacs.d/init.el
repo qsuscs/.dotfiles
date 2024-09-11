@@ -151,7 +151,8 @@
 	helm-buffers-fuzzy-matching t
 	helm-recentf-fuzzy-match t
 	helm-ff-file-name-history-use-recentf t
-	helm-echo-input-in-header-line t))
+	helm-echo-input-in-header-line t
+	completion-styles '(flex)))
 (use-package helm-rg
   :after helm)
 
