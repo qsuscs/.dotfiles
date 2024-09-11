@@ -10,6 +10,7 @@ path=(
     ~/.gem/ruby/*/bin(/N)
     ~/.cabal/bin(/N)
     $GOPATH/bin(/N)
+    ${KREW_ROOT:-$HOME/.krew}/bin
     ~/.cargo/bin(/N)
     ~/.poetry/bin(/N)
     ~/.local/bin(/N)
