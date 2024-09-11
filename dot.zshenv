@@ -27,4 +27,5 @@ manpath=(
 typeset -xU path manpath
 [ -S ~/.gnupg/S.gpg-agent.ssh ] && export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh
 [ -S /run/user/$EUID/gnupg/S.gpg-agent.ssh ] && export SSH_AUTH_SOCK=/run/user/$EUID/gnupg/S.gpg-agent.ssh
+[ -S $XDG_RUNTIME_DIR/mpd/socket ] && export MPD_HOST=$XDG_RUNTIME_DIR/mpd/socket
 (( $+commands[rbenv] )) && eval "$(rbenv init -)"
