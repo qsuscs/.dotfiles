@@ -356,11 +356,12 @@
    message-confirm-send t
    mail-user-agent 'gnus-user-agent
    read-mail-command 'gnus
-   gnus-gcc-mark-as-read t
-   gnus-user-date-format-alist `((,(gnus-seconds-today) . "          T%H:%M:%S")
-				 (,(gnus-seconds-month) . "        %dT%H:%M:%S")
-				 (,(gnus-seconds-year)  . "     %m-%dT%H:%M:%S")
-				 (t                     .   "%Y-%m-%dT%H:%M:%S"))
+   gnus-gcc-mark-as-read t)
+  (setq gnus-user-date-format-alist '(((gnus-seconds-today) . "                %H:%M:%S")
+				      ((gnus-seconds-month)  . "%a         %e  %H:%M:%S")
+				      ((gnus-seconds-year)   . "%a      %m-%d  %H:%M:%S")
+				      (t                     .   "%a %Y-%m-%d  %H:%M:%S")))
+  (setq
    gnus-summary-line-format "%U%R %&user-date; %(%[%5k: %-23,23f%]%)%B%s\n"
    gnus-sum-thread-tree-single-indent "  "
    gnus-sorted-header-list '("^From:" "^Organization:" "^Sender:" "^To:" "^Newsgroups:" "^.?Cc:" "^Subject:" "^Date:" "^Resent-.*:" "^Reply-To:" "^Followup-To:" "^X-Clacks-Overhead:" "Openpgp:" "^Authentication-Results:" "^Message-ID:")
