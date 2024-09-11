@@ -199,10 +199,11 @@
 	    (defun qsx-hl-indent-mode-hook ()
 	      (highlight-indentation-mode))))
 
-(use-package dockerfile-mode)
 (use-package k8s-mode
   :hook (k8s-mode . yas-minor-mode))
 
+(use-package dockerfile-mode
+  :mode "/Containerfile\\(?:\\.[^/\\]*\\)?\\'")
 
 (defun qsx-dont-show-line-numbers-hook ()
   (setq display-line-numbers nil))
