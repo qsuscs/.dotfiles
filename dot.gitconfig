@@ -10,6 +10,8 @@
 	lol = log --oneline --graph --decorate --all
 	colorlog = log --date=relative --format=\"%Cblue%h%Creset %C(yellow)%an%Creset %Cgreen%ad%Creset%C(auto)%d%Creset %s\" --topo-order
 	push-all = !git remote | xargs -L1 git push
+	praise = blame
+	rofl = log --all --graph --format='%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ad%Creset %C(red bold)%d%Creset%s'  --date=relative  --abbrev-commit --decorate
 [push]
 	default = simple
 [instaweb]
@@ -23,3 +25,10 @@
 	bcc = fcc-sent@qsuscs.de
 [init]
 	defaultBranch = main
+[core]
+	quotePath = false
+	commitGraph = true
+[receive]
+	advertisePushOptions = true
+[gc]
+	writeCommitGraph = true
