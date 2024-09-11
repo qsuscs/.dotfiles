@@ -336,7 +336,12 @@
 ;; Use keypad comma as decimal separator
 (use-package calc
   :config
-  (define-key calc-digit-map (kbd "<kp-separator>") "."))
+  (define-key calc-digit-map (kbd "<kp-separator>") ".")
+
+  ;; Necessary for calc-digit-map kp-separator shenanigans below
+  ;; cf. https://debbugs.gnu.org/cgi/bugreport.cgi?bug=56117
+  (if (eq window-system 'pgtk)
+      (pgtk-use-im-context nil)))
 
 ;;; Mail
 (use-package gnus
