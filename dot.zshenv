@@ -24,7 +24,11 @@ manpath=(
     ~/.local/share/man(/N)
     $manpath
 )
-typeset -xU path manpath
+fpath=(
+    ~/.local/share/zsh(/N)
+    $fpath
+)
+typeset -xU path manpath fpath
 [ -S ~/.gnupg/S.gpg-agent.ssh ] && export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh
 [ -S /run/user/$EUID/gnupg/S.gpg-agent.ssh ] && export SSH_AUTH_SOCK=/run/user/$EUID/gnupg/S.gpg-agent.ssh
 [ -S $XDG_RUNTIME_DIR/mpd/socket ] && export MPD_HOST=$XDG_RUNTIME_DIR/mpd/socket

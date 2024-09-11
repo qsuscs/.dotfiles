@@ -13,7 +13,7 @@
 	praise = blame
 	rofl = log --all --graph --format='%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ad%Creset %C(red bold)%d%Creset%s'  --date=relative  --abbrev-commit --decorate
 [push]
-	default = simple
+	default = current
 [instaweb]
 	local = true
 	httpd = webrick

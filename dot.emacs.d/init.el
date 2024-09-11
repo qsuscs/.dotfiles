@@ -1,18 +1,23 @@
+;; See early-init.el for further package stuff
 (require 'package)
-(setq package-enable-at-startup nil)
 (setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")
-	("gnu" . "https://elpa.gnu.org/packages/")))
+      '(("melpa-stable" . "https://stable.melpa.org/packages/")
+	("melpa-unstable" . "https://melpa.org/packages/")
+	("gnu" . "https://elpa.gnu.org/packages/"))
+      ;; Use melpa-unstable only when explicitly requested
+      package-archive-priorities '(("melpa-stable" . 1)
+				   ("gnu" . 1)))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'use-package t))
+  (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t
-      use-package-verbose t)
+      use-package-verbose t
+      use-package-always-defer t)
 
-(let ((--backup-directory (concat user-emacs-directory "backups")))
+(let ((--backup-directory (locate-user-emacs-file "backups")))
   (unless (file-exists-p --backup-directory)
     (make-directory --backup-directory t))
   (setq backup-directory-alist `(("." . ,--backup-directory))))
@@ -28,30 +33,38 @@
       auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
       )
 (defun qsx-backup-enable-predicate (name)
-  (let ((directory (file-name-directory (file-truename (expand-file-name name))))
+  (let ((directory
+	 (file-name-directory (file-truename (expand-file-name name))))
 	(auto-save-list-directory
-	 (file-name-as-directory
-	  (file-truename (expand-file-name "auto-save-list" user-emacs-directory)))))
+         (file-truename
+          (expand-file-name
+           (file-name-as-directory
+            (locate-user-emacs-file "auto-save-list"))))))
     (if (string= directory auto-save-list-directory)
 	nil
       (normal-backup-enable-predicate name))))
 (setq backup-enable-predicate #'qsx-backup-enable-predicate)
 
-(let ((default-directory
-	(concat user-emacs-directory
-		(convert-standard-filename "elisp/"))))
+(let ((default-directory (locate-user-emacs-file "elisp")))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 
 (load "server")
 (unless (server-running-p) (server-start))
 
-(setq custom-file
-      (concat user-emacs-directory
-	      (convert-standard-filename "custom.el")))
-(load custom-file :noerror)
+(use-package modus-themes
+  :defer nil
+  :init
+  (dolist
+      (hash
+       '("7613ef56a3aebbec29618a689e47876a72023bbd1b8393efc51c38f5ed3f33d1"
+         "c7a926ad0e1ca4272c90fce2e1ffa7760494083356f6bb6d72481b879afce1f2"))
+    (add-to-list 'custom-safe-themes hash))
+  :config
+  (load-theme 'modus-vivendi-tinted))
 
-(load-theme 'deeper-blue)
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(load custom-file :noerror)
 
 (setq display-time-day-and-date t
       display-time-24hr-format t)
@@ -64,12 +77,16 @@
       :init (exec-path-from-shell-initialize))
     (setenv "LANG" "de_DE.UTF-8"))
 
+(use-package yasnippet)
+
 (use-package company
   :bind (:map company-mode-map
 	      ([remap completion-at-point] . #'company-complete))
   :config
-  (setq company-tooltip-align-annotations t
-	company-minimum-prefix-length 1))
+  (setq company-tooltip-align-annotations t)
+  :hook ((company-mode . yas-minor-mode)
+         (prog-mode . company-mode)))
+
 (use-package company-math
   :config
   (add-hook 'TeX-mode-hook (defun qsx-TeX-mode-hook-company ()
@@ -94,21 +111,67 @@
 (semantic-mode 1)
 (use-package srefactor
   :bind (:map c-mode-map
-	      ("M-RET" . #'srefactor-refactor-at-point)))
+	      ("M-RET" . #'srefactor-refactor-at-point))
+  :after project)
 
-(use-package elpy
-  :ensure t
-  :defer t
+(use-package python
+  :ensure nil
+  :hook ((python-mode python-ts-mode) . lsp))
+(use-package pet
   :init
-  (advice-add 'python-mode :before 'elpy-enable))
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
+
+(use-package highlight-indentation
+  :hook python-base-mode)
+
+(defun qsx-no-indent-tabs-mode ()
+  (setq indent-tabs-mode nil))
+
+(use-package cperl-mode
+  :ensure nil
+  :init
+  (add-to-list 'major-mode-remap-alist '(perl-mode . cperl-mode))
+  (add-hook 'cperl-mode-hook #'qsx-no-indent-tabs-mode))
+
+(use-package flymake-perlcritic
+  :pin melpa-unstable                   ; Last release in 2012
+  :config
+  (dolist (h '(flymake-mode
+               flymake-perlcritic-setup))
+    (add-hook 'cperl-mode-hook h))
+  (setq flymake-perlcritic-severity 1))
+
+(use-package treesit-auto
+  :demand t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (setq treesit-auto-langs (seq-difference treesit-auto-langs '(go gomod yaml)))
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+(use-package editorconfig
+  :defer nil
+  :config
+  (editorconfig-mode 1))
+
+(use-package tide
+  :after (company flycheck)
+  :hook ((typescript-ts-mode . tide-setup)
+         (tsx-ts-mode . tide-setup)
+         (typescript-ts-mode . tide-hl-identifier-mode)))
 
 (use-package lsp-mode
-  :commands lsp)
-
-(use-package lsp-ui)
-
-(use-package company-lsp
-  :hook (company-mode . yas-minor-mode))
+  :commands lsp
+  :bind-keymap ("s-l" . lsp-command-map)
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+  :init
+  (setq read-process-output-max (* 1024 1024) ;; 1 MiB
+	gc-cons-threshold 6400000))
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+(use-package helm-lsp
+  :commands helm-lsp-workspace-symbol)
 
 (use-package mercurial
   :ensure nil
@@ -119,8 +182,20 @@
 	 ("C-c m m" . #'magit-status)
 	 ("C-c m p" . #'magit-dispatch-popup)
 	 ("C-c m f" . #'magit-file-popup)
-	 ("C-c m d" . #'magit-diff-buffer-file))
-  :config (global-magit-file-mode))
+	 ("C-c m d" . #'magit-diff-buffer-file)))
+
+(use-package transpose-frame
+  :init
+  (dolist (i '(("j" . transpose-frame)
+               ("i" . flip-frame)
+               ("o" . flop-frame)
+               ("r" . rotate-frame)
+               ("c" . rotate-frame-clockwise)
+               ("C" . rotate-frame-anticlockwise)))
+    (dolist (p '("s-j " "s-j s-"))
+      (bind-key
+       (concat p (car i))
+       (cdr i)))))
 
 (use-package ace-window
   :bind ("M-o" . ace-window)
@@ -129,19 +204,20 @@
 (use-package avy
   :bind (("C-." . avy-goto-char-timer)
 	 ("C-:" . avy-goto-char-2)
-	 ("C-," . avy-goto-line)))
+	 ("C-," . avy-goto-line))
+  :custom (avy-keys '(?c ?t ?i ?e ?n ?r ?s ?g)))
 
-(use-package helm-config
-  :ensure nil
-  :bind-keymap ("C-c h" . helm-command-prefix)
-  :bind (:map helm-command-map
-	      ("o" . #'helm-occur)))
 (use-package helm
+  :demand t
+  :bind-keymap ("C-c h" . helm-command-map)
   :bind (("M-x" . #'helm-M-x)
+	 ("s-x" . #'execute-extended-command)
 	 ("M-y" . #'helm-show-kill-ring)
 	 ("C-x b" . #'helm-mini)
 	 ("C-x C-f" . #'helm-find-files)
-	 ("C-h SPC" . #'helm-all-mark-rings))
+	 ("C-h SPC" . #'helm-all-mark-rings)
+	 :map helm-command-map
+	 ("o" . #'helm-occur))
   :config
   (helm-mode 1)
   (helm-autoresize-mode t)
@@ -166,14 +242,9 @@
 
 (use-package meson-mode)
 
-(if (< emacs-major-version 26)
-    (use-package linum-relative
-      :ensure t
-      :config
-      (linum-mode)
-      (linum-relative-global-mode)
-      (setq linum-relative-current-symbol ""))
-  (setq-default display-line-numbers 'relative))
+(use-package systemd)
+
+(setq-default display-line-numbers 'relative)
 
 (use-package stripe-buffer
   :config
@@ -196,8 +267,19 @@
 (use-package yaml-mode
   :config
   (add-hook 'yaml-mode-hook
-	    (defun qsx-hl-indent-mode-hook ()
-	      (highlight-indentation-mode))))
+	    (defun qsx-yaml-hl-indent-mode-hook ()
+	      (highlight-indentation-mode)
+	      (highlight-indentation-set-offset yaml-indent-offset)))
+  (add-hook 'yaml-mode-hook #'qsx-no-indent-tabs-mode))
+
+(use-package elisp-mode
+  :ensure nil
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'qsx-no-indent-tabs-mode))
+
+(use-package macrostep
+  :bind (:map emacs-lisp-mode-map
+              ("C-c e" . macrostep-expand)))
 
 (use-package k8s-mode
   :hook (k8s-mode . yas-minor-mode))
@@ -210,7 +292,8 @@
 
 (dolist (h '(Man-mode-hook
 	     eshell-mode-hook
-	     ledger-report-mode-hook))
+	     ledger-report-mode-hook
+             special-mode-hook))
   (add-hook h #'qsx-dont-show-line-numbers-hook))
 
 (use-package pdf-tools
@@ -247,7 +330,17 @@
   (dolist (f '(qsx-enable-TeX-fold-mode
 	       turn-on-auto-fill
 	       prettify-symbols-mode))
-    (add-hook 'TeX-mode-hook f)))
+    (add-hook 'TeX-mode-hook f))
+  (TeX-add-symbols
+   '("cref" TeX-arg-ref)
+   '("Cref" TeX-arg-ref)
+   '("cpageref" TeX-arg-ref)
+   '("Cpageref" TeX-arg-ref))
+  (TeX-ispell-skip-setcar
+   '(("\\\\[cC]ref" ispell-tex-arg-end 1)
+     ("\\\\cite" ispell-tex-arg-end)
+     ("\\\\iac" ispell-tex-arg-end)
+     ("\\\\\\(text\\)?tt" ispell-tex-arg-end))))
 
 (use-package reftex
   :if (display-graphic-p)
@@ -307,12 +400,39 @@
 (setq column-number-mode t)
 
 (global-set-key (kbd "C-x C-k") #'kill-this-buffer)
-(global-set-key (kbd "C-M-y") '(lambda ()
-				 (interactive)
-				 (insert (gui-get-primary-selection))))
+(global-set-key (kbd "C-M-y") #'(lambda ()
+				  (interactive)
+				  (insert (gui-get-primary-selection))))
 
-(add-hook 'org-mode-hook #'turn-on-auto-fill)
-(setq org-list-allow-alphabetical t)
+(use-package org
+  :ensure nil
+  :config
+  (add-hook 'org-mode-hook #'turn-on-auto-fill)
+  (setq org-list-allow-alphabetical t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (dot . t)
+     (sqlite . t)))
+  (add-to-list
+   'org-latex-packages-alist
+   '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+  (add-to-list
+   'org-latex-packages-alist
+   '("AUTO" "babel" t ("pdflatex")))
+  (add-to-list
+   'org-latex-packages-alist
+   '("" "booktabs" nil))
+  (add-to-list
+   'org-latex-classes
+   '("scrartcl"
+     "\\documentclass{scrartcl}"
+     ("\\section{%s}" . "\\section*{%s}")
+     ("\\subsection{%s}" . "\\subsection*{%s}")
+     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+     ("\\paragraph{%s}" . "\\paragraph*{%s}")
+     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (setq org-latex-default-class "scrartcl"))
 
 (setq-default fill-column 80)
 
@@ -329,6 +449,7 @@
 (use-package haskell-mode)
 
 (use-package ledger-mode
+  :pin melpa-unstable                   ; Last release 4.0.0 is incompatible
   :config
   (setq ledger-default-date-format "%Y-%m-%d"
 	ledger-use-iso-dates t))
@@ -345,6 +466,7 @@
 
 ;;; Mail
 (use-package gnus
+  :defer t
   :config
   (setq
    message-kill-buffer-on-exit t

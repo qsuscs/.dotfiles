@@ -14,3 +14,7 @@
 /abbrev_defs
 /elpy
 /eln-cache
+/.cache
+/.cask
+/projects
+/tree-sitter

@@ -63,6 +63,11 @@ qsx_fix_vcs_info
 	# Reset terminal cursor
 	printf "\033[0 q"
 }
+if ! (( $+commands[open] )) && (( $+commands[gio] )); then
+       function open {
+               gio open "$@" >/dev/null 2>/dev/null
+       }
+fi
 alias g=git
 alias ec="emacsclient -n"
 alias et="emacsclient -t"
@@ -71,6 +76,11 @@ if (( $+commands[exa] )); then
     alias ls="exa"
     alias l="exa -g -l --git"
     alias la="exa -g -la --git"
+fi
+if (( $+commands[eza] )); then
+    alias ls="eza"
+    alias l="eza -g -l --git"
+    alias la="eza -g -la --git"
 fi
 if (( $+commands[rsync] )); then
     alias rs="rsync -vahPi"

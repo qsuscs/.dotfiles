@@ -1,6 +1,6 @@
 configuration {
 	modi: "drun,run,ssh";
 	dpi: 0;
-	theme: "DarkBlue";
 	show-icons: true;
 }
+@theme "DarkBlue"
