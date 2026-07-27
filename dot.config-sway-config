@@ -18,7 +18,7 @@ workspace_layout tabbed
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty-1
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+c kill
@@ -26,6 +26,7 @@ bindsym $mod+Shift+c kill
 # start rofi (a program launcher)
 bindsym $mod+Shift+p exec rofi -show run
 bindsym $mod+p exec rofi -show drun
+bindsym $mod+e exec rofimoji
 
 # change focus
 bindsym $mod+n focus left
@@ -164,24 +165,16 @@ bar {
     }
 }
 
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym $mod+Escape exec loginctl lock-session
-bindsym $mod+Shift+Escape exec pkill -u $(id -u) -USR1 swayidle
-#bindsym XF86Sleep exec $lockcommand, exec systemctl suspend
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-#bindsym $mod+F1 exec setxkbmap de bone
-#bindsym $mod+Shift+F1 exec setxkbmap de
-#bindsym $mod+F2 exec setxkbmap de ru
-#bindsym $mod+F3 exec setxkbmap gr
-#bindsym $mod+F4 exec setxkbmap us
+bindsym $mod+Shift+Escape exec sleep 1 && pkill -u $(id -u) -USR1 swayidle
 
 input * {
 	xkb_layout de,us,de,gr
-	xkb_variant bone,,ru,
+	xkb_variant bone_qsx,,ru,
+}
+input "1529:9730:Datalogic_Scanning,_Inc._Point_of_Sale_Handable_Scanner" {
+	xkb_layout de
+	xkb_variant nodeadkeys
 }
 bindsym $mod+Mod1+space input * xkb_switch_layout next
 bindsym $mod+F1 input * xkb_switch_layout 0
@@ -189,15 +182,17 @@ bindsym $mod+F2 input * xkb_switch_layout 1
 bindsym $mod+F3 input * xkb_switch_layout 2
 bindsym $mod+F4 input * xkb_switch_layout 3
 
+bindgesture swipe:3:right workspace next
+bindgesture swipe:3:left workspace prev
+bindgesture swipe:4:left exec swaync-client --open-panel
+bindgesture swipe:4:right exec swaync-client --close-panel
+
 output * {
-       bg ~/Pictures/rainbow_colorful_background_lines_patterns_66008_2560x1440.png fill
+       bg ~/.bg.jpg fill
 }
 
 seat * xcursor_theme "Adwaita"
 
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec mako
-exec swayidle -w lock "swaylock -f" before-sleep "loginctl lock-session" timeout 600 'swaymsg "output * dpms off"; loginctl lock-session' resume 'swaymsg "output * dpms on"'
-# Lat/Lon for Aachen
-exec wlsunset -l 50.8 -L 6.1
 exec nm-applet --indicator
+
+include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
