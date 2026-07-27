@@ -3,7 +3,14 @@
 . ~/.zshrc.from_grml
 
 zstyle :prompt:grml:right:setup use-rprompt false
-zstyle :prompt:grml:left:items:percent pre $'\n'
+zstyle :prompt:grml:left:items:shlvl pre $'\n'
+
+function qsx_prompt_shlvl() {
+    if (( SHLVL > 1 )); then
+        REPLY="%F{green}(${SHLVL})%f "
+    fi
+}
+grml_theme_add_token shlvl -i qsx_prompt_shlvl
 
 # With upstream grml config, both path and vcs components of the prompt tokens
 # always contain a trailing space, so that 'path vcs percent' is separated by
@@ -30,15 +37,17 @@ function qsx_theme_path() {
 grml_theme_add_token path-qsx -f qsx_theme_path '%B' '%b'
 local -a items
 if zstyle -a :prompt:grml:left:setup items items; then
+    items[-1]="shlvl"
+    items+=("percent")
     # find index of "path"
     local i=${items[(i)path]}
     # if it exists …
     if (( ${+items[$i]} )); then
 	# … replace with our version …
 	items[$i]="path-qsx"
-	# … and apply
-	zstyle :prompt:grml:left:setup items ${items}
     fi
+    # … and apply
+    zstyle :prompt:grml:left:setup items ${items}
     unset i
 fi
 unset items
