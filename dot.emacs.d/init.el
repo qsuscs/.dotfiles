@@ -228,6 +228,10 @@
   :bind ("M-o" . ace-window)
   :config (setq aw-scope 'frame))
 
+(use-package mhtml-mode
+  :ensure nil
+  :config (keymap-unset html-mode-map "M-o"))
+
 (use-package avy
   :bind (("C-." . avy-goto-char-timer)
 	 ("C-:" . avy-goto-char-2)
