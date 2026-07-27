@@ -1,8 +1,8 @@
-* {
+button, .module {
     border: none;
     border-radius: 0;
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "Source Code Pro", "Font Awesome 5 Free";
+    font-family: "Source Code Pro", "Font Awesome 6 Free";
     font-size: 12px;
     min-height: 0;
 }
@@ -68,6 +68,8 @@ window#waybar.chromium {
 
 #clock,
 #battery,
+#bluetooth,
+#upower,
 #cpu,
 #memory,
 #disk,
@@ -79,6 +81,9 @@ window#waybar.chromium {
 #tray,
 #mode,
 #idle_inhibitor,
+#power-profiles-daemon,
+#systemd-failed-units,
+#privacy,
 #mpd {
     padding: 0 10px;
     margin: 0 4px;
@@ -104,12 +109,12 @@ window#waybar.chromium {
     background-color: #64727D;
 }
 
-#battery {
+#battery, #upower {
     background-color: #ffffff;
     color: #000000;
 }
 
-#battery.charging, #battery.plugged {
+#battery.charging, #battery.plugged, #upower.charging {
     color: #ffffff;
     background-color: #26A65B;
 }
@@ -126,7 +131,7 @@ window#waybar.chromium {
     color: #ffffff;
     animation-name: blink;
     animation-duration: 0.5s;
-    animation-timing-function: linear;
+    animation-timing-function: steps(12);
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
@@ -158,6 +163,35 @@ label:focus {
 
 #network.disconnected {
     background-color: #f53c3c;
+}
+
+#bluetooth {
+    background-color: rgb(0, 51, 171);
+}
+
+#bluetooth.on {
+    background-color: rgba(0, 51, 171, 0.7);
+}
+
+#bluetooth.disabled, #bluetooth.off {
+    font-style: italic;
+    background-color: rgba(0, 51, 171, 0.4);
+}
+
+#bluetooth.discoverable {
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#bluetooth.discovering {
+    animation-name: blink;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
 #pulseaudio {
@@ -196,6 +230,19 @@ label:focus {
     background-color: #2980b9;
 }
 
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #eb4d4b;
+}
+
+#tray menu * {
+    font: initial;
+}
+
 #idle_inhibitor {
     background-color: #2d3436;
 }
@@ -203,6 +250,21 @@ label:focus {
 #idle_inhibitor.activated {
     background-color: #ecf0f1;
     color: #2d3436;
+}
+
+#power-profiles-daemon.performance {
+    background-color: #f53c3c;
+    color: #ffffff;
+}
+
+#power-profiles-daemon.balanced {
+    background-color: #2980b9;
+    color: #ffffff;
+}
+
+#power-profiles-daemon.power-saver {
+    background-color: #2ecc71;
+    color: #000000;
 }
 
 #mpd {
@@ -228,4 +290,17 @@ label:focus {
     padding: 0 5px;
     margin: 0 5px;
     min-width: 16px;
+}
+
+#privacy {
+    background: white;
+    color: #eb4d4b;
+}
+
+#systemd-failed-units.degraded {
+    background-color: #f53c3c;
+}
+
+#custom-notification {
+    font-family: "Symbols Nerd Font Mono";
 }

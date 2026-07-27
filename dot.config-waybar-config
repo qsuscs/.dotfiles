@@ -1,17 +1,19 @@
-// -*- javascript -*- vim:ft=javascript sw=4 et
+// -*- jsonc -*- vim:ft=javascript sw=4 et
 {
     "include": ".config/waybar/local.conf",
+    "reload_style_on_change": true,
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     // "width": 1280, // Waybar width
     // Choose the order of the modules
+    "fixed-center": false,
     "modules-left": [
         "sway/workspaces",
         "sway/mode"
 	// ,
         // "custom/media"
     ],
-    "modules-center": ["sway/window"],
+    //"modules-center": ["sway/window"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -65,15 +67,38 @@
         }
     },
     "tray": {
-        "spacing": 10
+        "spacing": 10,
+        "show-passive-items": true,
     },
     "clock": {
         "interval": 1,
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        //"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode"          : "year",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions":  {
+            "on-click-right": "mode",
+            "on-scroll-up": "tz_up",
+            "on-scroll-down": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        },
     },
     "cpu": {
         "format": "{usage}% ",
-        "tooltip": false
+        "format-alt": "{load} ",
+        "interval": 5,
     },
     "memory": {
         "format": "{}% "
@@ -143,7 +168,35 @@
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    }
+    },
+    "bluetooth": {
+        "on-click": "blueman-manager",
+        "on-click-right": "$HOME/.local/bin/bt-toggle.sh",
+        "format": "{status} <span style=\"normal\"></span>",
+        "format-on": "{status} <sub>{num_connections}</sub>",
+        "format-connected": "{device_alias} <sub>{num_connections}</sub>",
+        "format-connected-battery": "{device_alias} ({device_battery_percentage}%) <sub>{num_connections}</sub>",
+        "format-device-preference": ["qsx 35", "OpenRun by Shokz"],
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+	"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": "",
+        },
+    },
+    "privacy": {
+        "icon-size": 14,
+    },
+    "systemd-failed-units": {
+        "format": "✗ {nr_failed}",
+    },
 }
 
 // Local Variables:
