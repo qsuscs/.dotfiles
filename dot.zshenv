@@ -13,6 +13,7 @@ path=(
     $GOPATH/bin(/N)
     ~/.cargo/bin(/N)
     ~/.poetry/bin(/N)
+    ~/.cache/rebar3/bin(/N)
     ~/.local/bin(/N)
     /usr/local/bin(/N)
     /usr/local/sbin(/N)
