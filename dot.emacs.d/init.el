@@ -211,6 +211,8 @@
   :ensure t
   :after magit)
 
+(use-package info-nav)
+
 (use-package transpose-frame
   :init
   (dolist (i '(("j" . transpose-frame)
