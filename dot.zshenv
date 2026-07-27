@@ -5,6 +5,7 @@ export PATH=${PATH/::/:}
 export GPG_TTY=$(tty)
 export EDITOR=emacsclient
 export VISUAL=$EDITOR
+export CSCOPE_EDITOR=emacsclient-cscope
 path=(
     ~/Library/Python/*/bin(/N)
     ~/.gem/ruby/*/bin(/N)
