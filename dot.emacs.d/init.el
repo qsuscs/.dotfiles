@@ -148,9 +148,27 @@
   :custom
   (treesit-auto-install 'prompt)
   :config
-  (setq treesit-auto-langs (seq-difference treesit-auto-langs '(go gomod yaml)))
+  (setq treesit-auto-langs
+        (seq-difference treesit-auto-langs
+                        '(c cpp go gomod yaml php jsdoc phpdoc)))
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+
+(setq
+ treesit-language-source-alist
+ (append treesit-language-source-alist
+         '((erlang "https://github.com/WhatsApp/tree-sitter-erlang")
+           (astro "https://github.com/virchau13/tree-sitter-astro")
+           (css "https://github.com/tree-sitter/tree-sitter-css")
+           (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))))
+
+(use-package astro-ts-mode
+  :mode "\\.astro\\'"
+  :config (keymap-unset astro-ts-mode-map "M-o"))
+
+(use-package erlang-ts
+  :mode ("\\.erl\\'" . erlang-ts-mode)
+  :config (add-to-list 'lsp-language-id-configuration '(erlang-ts-mode . "erlang")))
 
 (use-package editorconfig
   :defer nil
