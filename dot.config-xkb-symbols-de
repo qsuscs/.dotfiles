@@ -1,0 +1,23 @@
+// vim:ft=xkb
+
+partial alphanumeric_keys
+xkb_symbols "bone_qsx_base" {
+    include "de(bone_base)"
+
+    key.type[Group1] = "EIGHT_LEVEL_ALPHABETIC_WITH_LEVEL5_LOCK";
+    key <KPDL> { [ period, KP_Separator, comma, minutes, KP_Delete, KP_Delete, seconds, NoSymbol ] };
+};
+
+partial alphanumeric_keys modifier_keys keypad_keys
+xkb_symbols "bone_qsx" {
+
+    include "de(bone_qsx_base)"
+
+    name[Group1]= "German (Bone, qsx custom)";
+
+    include "shift(both_capslock)"
+    include "level3(caps_switch)"
+    include "level3(bksl_switch)"
+    include "level5(lsgt_switch_lock)"
+    include "level5(ralt_switch_lock)"
+};
