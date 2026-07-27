@@ -366,7 +366,7 @@
 	fill-column 80)
   (dolist (f '(qsx-enable-TeX-fold-mode
 	       turn-on-auto-fill
-	       prettify-symbols-mode))
+               TeX-source-correlate-mode))
     (add-hook 'TeX-mode-hook f))
   (TeX-add-symbols
    '("cref" TeX-arg-ref)
