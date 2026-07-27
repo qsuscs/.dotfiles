@@ -184,7 +184,18 @@
   :init
   (setq read-process-output-max (* 1024 1024) ;; 1 MiB
 	gc-cons-threshold 6400000
-        lsp-clients-clangd-args '("--header-insertion=never")))
+        lsp-clients-clangd-args '("--header-insertion=never"))
+  :config
+  (add-to-list 'lsp-language-id-configuration '(LaTeX-mode . "latex"))
+
+  ;; ugly hack to add #'LaTeX-mode
+  ;; TODO: ⛔ Error (use-package): lsp-mode/:config: Symbol’s value as variable is void: lsp-clients-digestif-executable
+  (with-eval-after-load 'lsp-tex
+    (lsp-register-client
+     (make-lsp-client :new-connection (lsp-stdio-connection lsp-clients-digestif-executable)
+                      :major-modes '(plain-tex-mode latex-mode context-mode texinfo-mode LaTeX-mode)
+                      :priority (if (eq lsp-tex-server 'digestif) 1 -1)
+                      :server-id 'digestif))))
 (use-package lsp-ui
   :commands lsp-ui-mode)
 (use-package helm-lsp
