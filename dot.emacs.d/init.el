@@ -213,6 +213,8 @@
 
 (use-package info-nav)
 
+(use-package elsqlite)
+
 (use-package transpose-frame
   :init
   (dolist (i '(("j" . transpose-frame)
