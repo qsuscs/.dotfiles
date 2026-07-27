@@ -11,13 +11,13 @@ esac
 set -x
 mbsync -a || true
 notmuch new
+notmuch tag -new_cache -- tag:new_cache
 [ -d ~/.maildir/GMail ] && (cd ~/.maildir/GMail && gmi sync || true)
-new=$(notmuch search --output=messages tag:new | xargs)
-[ -z "$new" ] && exit
-notmuch config set query.new "$new"
+notmuch tag +new_cache -- tag:new
+[ "$(notmuch count tag:new)" -eq 0 ] && exit
 notmuch tag -new -- tag:new and folder:GMail/mail
 nm-tagger
 export MAILSEQ="${MBLAZE:-$HOME/.mblaze}/seq.sm"
 export MBLAZE_PAGER=""
-msearch -- --exclude=false query:new | mthread | mseq -S | mscan -f "$format"
+msearch -- --exclude=false tag:new_cache | mthread | mseq -S | mscan -f "$format"
 type mu > /dev/null && mu index || true
