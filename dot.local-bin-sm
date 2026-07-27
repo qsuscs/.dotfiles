@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 case $(hostname -s) in
-	naboo)
+	crait|naboo)
 		format='%u%r %3n %10d %17f %22F %t %i%S'
 		;;
 	*)
