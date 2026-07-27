@@ -262,7 +262,8 @@
 	helm-buffers-fuzzy-matching t
 	helm-recentf-fuzzy-match t
 	helm-ff-file-name-history-use-recentf t
-	helm-echo-input-in-header-line t))
+	helm-echo-input-in-header-line t
+	completion-styles '(flex)))
 (use-package helm-rg
   :after helm)
 
@@ -326,7 +327,11 @@
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)))
 
-(use-package dockerfile-mode)
+(use-package k8s-mode
+  :hook (k8s-mode . yas-minor-mode))
+
+(use-package dockerfile-mode
+  :mode "/Containerfile\\(?:\\.[^/\\]*\\)?\\'")
 
 (defun qsx-dont-show-line-numbers-hook ()
   (setq display-line-numbers nil))
@@ -421,6 +426,31 @@
 
 (setq c-default-style "linux")
 
+;; Taken from LLVM source tree
+;; https://github.com/llvm/llvm-project/blob/c719a8596d01cef9b54f0585bd2d68d657d8659a/llvm/utils/emacs/emacs.el
+(defun llvm-lineup-statement (langelem)
+  (let ((in-assign (c-lineup-assignments langelem)))
+    (if (not in-assign)
+        '++
+      (aset in-assign 0
+            (+ (aref in-assign 0)
+               (* 2 c-basic-offset)))
+      in-assign)))
+
+;; Add a cc-mode style for editing LLVM C and C++ code
+(c-add-style "llvm.org"
+             '("gnu"
+	       (fill-column . 80)
+	       (c++-indent-level . 2)
+	       (c-basic-offset . 2)
+	       (indent-tabs-mode . nil)
+	       (c-offsets-alist . ((arglist-intro . ++)
+				   (innamespace . 0)
+				   (member-init-intro . ++)
+				   (statement-cont . llvm-lineup-statement)))))
+;; End LLVM block
+(require 'llvm-mode)
+
 (setq tramp-default-method "ssh"
       tramp-terminal-type "tramp")
 
@@ -488,7 +518,12 @@
 ;; Use keypad comma as decimal separator
 (use-package calc
   :config
-  (define-key calc-digit-map (kbd "<kp-separator>") "."))
+  (define-key calc-digit-map (kbd "<kp-separator>") ".")
+
+  ;; Necessary for calc-digit-map kp-separator shenanigans below
+  ;; cf. https://debbugs.gnu.org/cgi/bugreport.cgi?bug=56117
+  (if (eq window-system 'pgtk)
+      (pgtk-use-im-context nil)))
 
 (use-package gnuplot
   :mode ("\\.gp\\'" . gnuplot-mode)
@@ -534,11 +569,12 @@
    message-confirm-send t
    mail-user-agent 'gnus-user-agent
    read-mail-command 'gnus
-   gnus-gcc-mark-as-read t
-   gnus-user-date-format-alist `((,(gnus-seconds-today) . "          T%H:%M:%S")
-				 (,(gnus-seconds-month) . "        %dT%H:%M:%S")
-				 (,(gnus-seconds-year)  . "     %m-%dT%H:%M:%S")
-				 (t                     .   "%Y-%m-%dT%H:%M:%S"))
+   gnus-gcc-mark-as-read t)
+  (setq gnus-user-date-format-alist '(((gnus-seconds-today) . "                %H:%M:%S")
+				      ((gnus-seconds-month)  . "%a         %e  %H:%M:%S")
+				      ((gnus-seconds-year)   . "%a      %m-%d  %H:%M:%S")
+				      (t                     .   "%a %Y-%m-%d  %H:%M:%S")))
+  (setq
    gnus-summary-line-format "%U%R %&user-date; %(%[%5k: %-23,23f%]%)%B%s\n"
    gnus-sum-thread-tree-single-indent "  "
    gnus-sorted-header-list '("^From:" "^Organization:" "^Sender:" "^To:" "^Newsgroups:" "^.?Cc:" "^Subject:" "^Date:" "^Resent-.*:" "^Reply-To:" "^Followup-To:" "^X-Clacks-Overhead:" "Openpgp:" "^Authentication-Results:" "^Message-ID:")

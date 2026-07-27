@@ -11,6 +11,7 @@ path=(
     ~/.gem/ruby/*/bin(/N)
     ~/.cabal/bin(/N)
     $GOPATH/bin(/N)
+    ${KREW_ROOT:-$HOME/.krew}/bin
     ~/.cargo/bin(/N)
     ~/.poetry/bin(/N)
     ~/.cache/rebar3/bin(/N)
@@ -32,4 +33,5 @@ fpath=(
 typeset -xU path manpath fpath
 [ -S ~/.gnupg/S.gpg-agent.ssh ] && export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh
 [ -S /run/user/$EUID/gnupg/S.gpg-agent.ssh ] && export SSH_AUTH_SOCK=/run/user/$EUID/gnupg/S.gpg-agent.ssh
+[ -S $XDG_RUNTIME_DIR/mpd/socket ] && export MPD_HOST=$XDG_RUNTIME_DIR/mpd/socket
 (( $+commands[rbenv] )) && eval "$(rbenv init -)"
