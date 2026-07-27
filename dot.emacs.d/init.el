@@ -183,7 +183,8 @@
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
   :init
   (setq read-process-output-max (* 1024 1024) ;; 1 MiB
-	gc-cons-threshold 6400000))
+	gc-cons-threshold 6400000
+        lsp-clients-clangd-args '("--header-insertion=never")))
 (use-package lsp-ui
   :commands lsp-ui-mode)
 (use-package helm-lsp
