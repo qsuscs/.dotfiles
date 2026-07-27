@@ -122,6 +122,10 @@
 (use-package highlight-indentation
   :hook python-base-mode)
 
+(use-package jinja2-mode
+  :mode "\\.html.j2\\'"
+  :config (keymap-unset jinja2-mode-map "M-o"))
+
 (defun qsx-no-indent-tabs-mode ()
   (setq indent-tabs-mode nil))
 
