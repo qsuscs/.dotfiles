@@ -512,6 +512,9 @@
 (use-package arduino-mode)
 (use-package arduino-cli-mode)
 
+(use-package gleam-ts-mode
+  :mode (rx ".gleam" eos))
+
 ;;; Mail
 (use-package gnus
   :defer t
