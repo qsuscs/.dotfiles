@@ -301,6 +301,11 @@
 	      (highlight-indentation-set-offset yaml-indent-offset)))
   (add-hook 'yaml-mode-hook #'qsx-no-indent-tabs-mode))
 
+(defun qsx-disable-show-trailing-whitespace ()
+  (setq show-trailing-whitespace nil))
+
+(add-hook 'Info-mode-hook #'qsx-disable-show-trailing-whitespace)
+
 (use-package elisp-mode
   :ensure nil
   :config
