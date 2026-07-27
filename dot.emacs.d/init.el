@@ -315,7 +315,8 @@
 (use-package elisp-mode
   :ensure nil
   :config
-  (add-hook 'emacs-lisp-mode-hook #'qsx-no-indent-tabs-mode))
+  (add-hook 'emacs-lisp-mode-hook #'qsx-no-indent-tabs-mode)
+  (add-hook 'lisp-data-mode-hook #'qsx-no-indent-tabs-mode))
 
 (use-package macrostep
   :bind (:map emacs-lisp-mode-map
