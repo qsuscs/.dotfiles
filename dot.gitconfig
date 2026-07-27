@@ -1,5 +1,6 @@
 [include]
 	path = ~/.dotfiles/grml-etc-core/etc/skel/.gitconfig
+	path = .gitconfig.delta
 [user]
 	email = qsx@chaotikum.eu
 	name = Thomas Schneider
@@ -23,3 +24,5 @@
 	bcc = fcc-sent@qsuscs.de
 [init]
 	defaultBranch = main
+[merge]
+	conflictStyle = diff3
