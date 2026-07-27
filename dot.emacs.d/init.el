@@ -509,6 +509,9 @@
     :innermodes '(poly-pio-c-innermode))
   (add-to-list 'auto-mode-alist '("\\.pio\\'" . poly-pio-mode)))
 
+(use-package arduino-mode)
+(use-package arduino-cli-mode)
+
 ;;; Mail
 (use-package gnus
   :defer t
