@@ -21,3 +21,8 @@
 	defaultBranch = main
 [merge]
 	conflictStyle = diff3
+
+[diff]
+    colorMoved = default
+[credential]
+	helper = libsecret
