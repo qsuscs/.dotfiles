@@ -286,8 +286,7 @@
     (add-hook h #'qsx-stripe-listify-buffer-hook)))
 
 (use-package rainbow-delimiters
-  :config
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode-enable))
+  :hook (prog-mode . rainbow-delimiters-mode-enable))
 
 (show-paren-mode 1)
 
