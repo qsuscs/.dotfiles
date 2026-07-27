@@ -277,7 +277,7 @@
 (setq-default display-line-numbers 'relative)
 
 (use-package stripe-buffer
-  :config
+  :init
   (defun qsx-stripe-listify-buffer-hook ()
     (stripe-listify-buffer))
   (dolist (h '(gnus-group-mode-hook
