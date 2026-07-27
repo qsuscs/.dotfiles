@@ -13,11 +13,6 @@
 	push-all = !git remote | xargs -L1 git push
 [push]
 	default = current
-[instaweb]
-	local = true
-	httpd = webrick
-	port = 64044
-	browser = google-chrome
 [pull]
 	ff = only
 [sendemail]
