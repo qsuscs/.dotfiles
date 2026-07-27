@@ -408,12 +408,12 @@
 
 (use-package toml-mode)
 
-(use-package rust-mode
-  :hook (rust-mode . lsp)
-  :mode "\\.rs\\'")
+(use-package rust-ts-mode
+  :ensure nil
+  :hook (rust-ts-mode . lsp))
 ;; Add keybindings for interacting with Cargo
 (use-package cargo
-  :hook (rust-mode . cargo-minor-mode))
+  :hook ((rust-mode rust-ts-mode) . cargo-minor-mode))
 
 (setq c-default-style "linux")
 
