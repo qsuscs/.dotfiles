@@ -306,6 +306,12 @@
 
 (add-hook 'Info-mode-hook #'qsx-disable-show-trailing-whitespace)
 
+(use-package k8s-mode
+  :hook (k8s-mode . yas-minor-mode))
+(use-package kubedoc
+  :hook ((kubedoc-mode . qsx-dont-show-line-numbers-hook)
+         (kubedoc-mode . qsx-disable-show-trailing-whitespace)))
+
 (use-package elisp-mode
   :ensure nil
   :config
