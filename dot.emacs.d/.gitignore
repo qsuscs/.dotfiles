@@ -18,3 +18,5 @@
 /.cask
 /projects
 /tree-sitter
+/geben
+.dap-breakpoints
