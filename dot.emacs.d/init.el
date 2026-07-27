@@ -381,9 +381,20 @@
 
 (use-package reftex
   :if (display-graphic-p)
+  :after (tex)
+  :hook (TeX-mode . reftex-mode)
   :config
   (setq reftex-plug-into-AUCTeX t)
-  (add-hook 'TeX-mode-hook #'reftex-mode))
+  (add-hook 'TeX-mode-hook #'reftex-mode)
+  (TeX-add-style-hook
+   "cleveref"
+   (lambda ()
+     (if (boundp 'reftex-ref-style-alist)
+         (add-to-list
+	  'reftex-ref-style-alist
+	  '("Cleveref" "cleveref"
+            (("\\cref" ?c) ("\\Cref" ?C) ("\\cpageref" ?d) ("\\Cpageref" ?D)))))
+     (reftex-ref-style-activate "Cleveref"))))
 
 (use-package auctex-latexmk
   :if (display-graphic-p)
