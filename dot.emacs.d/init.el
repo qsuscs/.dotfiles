@@ -177,6 +177,7 @@
          (typescript-ts-mode . tide-hl-identifier-mode)))
 
 (use-package lsp-mode
+  :pin melpa-unstable
   :commands lsp
   :bind-keymap ("s-l" . lsp-command-map)
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
