@@ -327,9 +327,6 @@
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)))
 
-(use-package k8s-mode
-  :hook (k8s-mode . yas-minor-mode))
-
 (use-package dockerfile-mode
   :mode "/Containerfile\\(?:\\.[^/\\]*\\)?\\'")
 
