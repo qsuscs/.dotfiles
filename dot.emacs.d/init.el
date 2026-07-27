@@ -113,7 +113,11 @@
   :hook ((python-mode python-ts-mode) . lsp))
 (use-package pet
   :init
-  (add-hook 'python-base-mode-hook 'pet-mode -10))
+  (add-hook 'python-base-mode-hook 'pet-mode -10)
+  (add-hook
+   'python-base-mode-hook
+   (defun qsx-python-pet-hook ()
+     (setq-local lsp-pylsp-server-command (list (pet-executable-find "pylsp"))))))
 
 (use-package highlight-indentation
   :hook python-base-mode)
