@@ -490,6 +490,10 @@
   :config
   (define-key calc-digit-map (kbd "<kp-separator>") "."))
 
+(use-package gnuplot
+  :mode ("\\.gp\\'" . gnuplot-mode)
+  :hook ((gnuplot-comint-mode .  qsx-disable-show-trailing-whitespace)))
+
 ;;; Mail
 (use-package gnus
   :defer t
