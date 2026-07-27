@@ -440,7 +440,8 @@
    'org-babel-load-languages
    '((emacs-lisp . t)
      (dot . t)
-     (sqlite . t)))
+     (sqlite . t)
+     (plantuml . t)))
   (add-to-list
    'org-latex-packages-alist
    '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
