@@ -206,11 +206,10 @@
   :bind-keymap ("C-c H" . hg-global-map))
 
 (use-package magit
-  :bind (("C-x g" . #'magit-status)
-	 ("C-c m m" . #'magit-status)
-	 ("C-c m p" . #'magit-dispatch-popup)
-	 ("C-c m f" . #'magit-file-popup)
-	 ("C-c m d" . #'magit-diff-buffer-file)))
+  :defer 10)
+(use-package magit-gh
+  :ensure t
+  :after magit)
 
 (use-package transpose-frame
   :init
