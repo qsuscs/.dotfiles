@@ -516,6 +516,11 @@
   :mode (rx ".gleam" eos))
 
 ;;; Mail
+(use-package notmuch
+  :defer t
+  :ensure nil
+  :hook ((notmuch-hello-mode . qsx-dont-show-line-numbers-hook)))
+
 (use-package gnus
   :defer t
   :config
