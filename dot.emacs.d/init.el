@@ -494,6 +494,21 @@
   :mode ("\\.gp\\'" . gnuplot-mode)
   :hook ((gnuplot-comint-mode .  qsx-disable-show-trailing-whitespace)))
 
+;; RP PIO
+(progn
+  (define-hostmode poly-pio-hostmode
+    :mode 'asm-mode)
+  (define-innermode poly-pio-c-innermode
+    :mode 'c-mode
+    :head-matcher "^% c-sdk {$"
+    :tail-matcher "^%}$"
+    :head-mode 'host
+    :tail-mode 'host)
+  (define-polymode poly-pio-mode
+    :hostmode 'poly-pio-hostmode
+    :innermodes '(poly-pio-c-innermode))
+  (add-to-list 'auto-mode-alist '("\\.pio\\'" . poly-pio-mode)))
+
 ;;; Mail
 (use-package gnus
   :defer t
