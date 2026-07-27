@@ -433,6 +433,8 @@
 
 (use-package org
   :ensure nil
+  :init
+  (require 'org-loaddefs)
   :config
   (add-hook 'org-mode-hook #'turn-on-auto-fill)
   (setq org-list-allow-alphabetical t)
@@ -451,16 +453,17 @@
   (add-to-list
    'org-latex-packages-alist
    '("" "booktabs" nil))
-  (add-to-list
-   'org-latex-classes
-   '("scrartcl"
-     "\\documentclass{scrartcl}"
-     ("\\section{%s}" . "\\section*{%s}")
-     ("\\subsection{%s}" . "\\subsection*{%s}")
-     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-     ("\\paragraph{%s}" . "\\paragraph*{%s}")
-     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  (setq org-latex-default-class "scrartcl"))
+  (with-eval-after-load 'ox-latex
+    (add-to-list
+     'org-latex-classes
+     '("scrartcl"
+       "\\documentclass{scrartcl}"
+       ("\\section{%s}" . "\\section*{%s}")
+       ("\\subsection{%s}" . "\\subsection*{%s}")
+       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+       ("\\paragraph{%s}" . "\\paragraph*{%s}")
+       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+    (setq org-latex-default-class "scrartcl")))
 
 (setq-default fill-column 80)
 
