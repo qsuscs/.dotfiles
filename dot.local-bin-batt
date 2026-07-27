@@ -5,7 +5,7 @@ import datetime
 import gi
 
 gi.require_version("UPowerGlib", "1.0")
-from gi.repository import UPowerGlib as upower
+from gi.repository import UPowerGlib as upower  # noqa: E402
 
 client = upower.Client.new()
 dev = client.get_display_device()
